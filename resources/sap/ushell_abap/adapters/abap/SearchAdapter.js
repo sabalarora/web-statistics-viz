@@ -1,0 +1,2 @@
+// Copyright (c) 2009-2017 SAP SE, All Rights Reserved
+sap.ui.define(['sap/ushell/renderers/fiori2/search/SearchConfiguration','sap/ushell/renderers/fiori2/search/esh/api/release/sina'],function(S){"use strict";sap.ushell_abap.adapters.abap.SearchAdapter=function(s){if(!this.isSearchRegistered){var c=new S.getInstance();this.sina=c.getSina();this.isSearchRegistered=true;}this.getSina=function(){return this.sina;};};return sap.ushell_abap.adapters.abap.SearchAdapter;});

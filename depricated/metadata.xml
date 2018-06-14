@@ -1,0 +1,21 @@
+<edmx:Edmx xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" Version="1.0">
+    <edmx:DataServices m:DataServiceVersion="1.0" m:MaxDataServiceVersion="3.0"
+					   xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata">
+        <Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="NorthwindModel">
+            <EntityType Name="WebContentStat">
+                <Key>
+                    <PropertyRef Name="App Name"/>
+                    <PropertyRef Name="Hits"/>
+                    <PropertyRef Name="Hour"/>
+                </Key>
+                <Property Name="App Name" Type="Edm.String"/>
+                <Property Name="Hits" Type="Edm.Int"/>
+                <Property Name="Hours" Type="Edm.String"/>
+            </EntityType>
+
+            <EntityContainer Name="NorthwindEntities">
+                <EntitySet Name="daily" EntityType="NorthwindModel.WebContentStat"/>
+            </EntityContainer>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

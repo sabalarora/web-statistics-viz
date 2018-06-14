@@ -1,0 +1,83 @@
+{
+    "_version": "1.8.0",
+    "sap.app" : {
+        "id" : "com.dla.webstat",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "applicationVersion": {
+            "version": "1.0.0"
+        }
+    },
+    "sap.ui5":{
+        "rootView": {
+            "viewName": "com.dla.webstat.view.App",
+            "type": "XML",
+            "async": true,
+            "id": "app"
+        },
+        "dependencies": {
+            "minUI5Version": "1.30",
+            "libs": {
+                "sap.ui.core": {},
+				"sap.m": {},
+				"sap.tnt": {},
+				"sap.ui.layout": {},
+				"sap.uxap": {}
+            }
+        },
+        "models":{
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "com.dla.webstat.i18n.i18n"
+                }
+            },
+            "side": {
+				"type": "sap.ui.model.json.JSONModel",
+				"uri": "model/sideContent.json"
+            },
+            "apps": {
+				"type": "sap.ui.model.json.JSONModel",
+				"uri": "test/localService/mockdata/applications/applications.json"
+            },
+            "intervals": {
+				"type": "sap.ui.model.json.JSONModel",
+				"uri": "test/localService/mockdata/applications/intervals.json"
+            }
+        },
+        "routing":{
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "viewType": "XML",
+                "viewPath": "com.dla.webstat.view",
+                "controlId": "mainContents",
+                "controlAggregation": "pages",
+                "async": true
+            },
+            "routes": [
+                {
+                    "pattern": "",
+                    "name": "start",
+                    "target": "start"
+                },
+                {
+                    "pattern": "Statistics/{application}/{interval}/:chartOrTable:",
+                    "name": "statistics",
+                    "target": "statistics"
+                }
+            ],
+            "targets": {
+                "start": {
+                    "viewID": "start",
+                    "viewName": "Start"
+                },
+                "statistics": {
+					"viewId": "statistics",
+					"viewName": "Statistics"
+				}
+            }
+        }
+    }
+}

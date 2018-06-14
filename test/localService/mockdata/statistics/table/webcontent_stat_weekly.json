@@ -1,0 +1,50 @@
+[{
+    "timestamphour": "2015-03-25T12:00:00Z",
+    "aggregationlevel": "w",
+    "content": "",
+    "pcdurl": "",
+    "objecttype": "Page",
+    "visits": "625",
+    "custom": "Login Page",
+    "id": "0"
+}, 
+{
+    "timestamphour": "2019-03-25T12:00:00Z",
+    "aggregationlevel": "w",
+    "content": "",
+    "pcdurl": "",
+    "objecttype": "Page",
+    "visits": "225",
+    "custom": "Login Page",
+    "id": "1"
+},
+{
+    "timestamphour": "2019-03-25T12:00:00Z",
+    "aggregationlevel": "w",
+    "content": "",
+    "pcdurl": "",
+    "objecttype": "Page",
+    "visits": "225",
+    "custom": "Login Page",
+    "id": "1"
+},
+{
+    "timestamphour": "2019-03-25T12:00:00Z",
+    "aggregationlevel": "w",
+    "content": "",
+    "pcdurl": "",
+    "objecttype": "Page",
+    "visits": "225",
+    "custom": "Login Page",
+    "id": "1"
+},
+{
+    "timestamphour": "2019-03-25T12:00:00Z",
+    "aggregationlevel": "w",
+    "content": "",
+    "pcdurl": "",
+    "objecttype": "Page",
+    "visits": "225",
+    "custom": "Login Page",
+    "id": "1"
+}]

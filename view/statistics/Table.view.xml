@@ -1,0 +1,36 @@
+<mvc:View 
+    controllerName="com.dla.webstat.controller.statistics.Table" 
+    xmlns="sap.m" 
+    xmlns:mvc="sap.ui.core.mvc">
+
+
+         <Table
+            id="tabledata"
+            items="{ path: '/items' }">
+           	<columns>
+                <Column width="12em">
+                    <Text text="Time Stamp" />
+                </Column>
+                 <Column width="12em">
+                    <Text text="Agg. Level" />
+                </Column>
+                <Column width="12em">
+                    <Text text="Content" />
+                </Column>
+            </columns>
+            <items>
+					<ColumnListItem>
+                    	<cells>
+                            <Text text="{timestamphour}"/>
+                            <Text text="{aggregationlevel}"/>
+                            <Text text="{content}"/>
+            
+
+                        </cells>
+                    </ColumnListItem>
+            </items>
+        </Table>
+
+
+
+</mvc:View>

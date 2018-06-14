@@ -1,0 +1,14 @@
+[
+    {
+        "name" : "All",
+        "key": "all"
+    },
+    {
+        "name" : "Romsync",
+        "key": "romsync"
+    },
+    {
+        "name": "WebStat",
+        "key": "webstat"
+    }
+]

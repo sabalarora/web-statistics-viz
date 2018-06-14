@@ -1,0 +1,45 @@
+<mvc:View
+	controllerName="com.dla.webstat.controller.Statistics"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+    xmlns:l="sap.ui.layout">
+	<Page showHeader="false">
+    	<IconTabBar id="tabbar" upperCase="true" expandable="false" applyContentPadding="true" stretchContentHeight="true" class="sapUiResponsiveContentPadding">
+            <items>
+                <IconTabFilter text="All" />
+                <IconTabFilter text="Daily" key="daily"/>
+                <IconTabFilter text="Weekly" key="weekly"/>
+                <IconTabFilter text="Monthly" key="monthly"/>
+            </items>
+		<content>
+			<TileContent  class="sapUiSmallMargin">
+			<content>
+				<mvc:XMLView viewName="com.dla.webstat.view.statistics.Chart"/>
+         
+		</content>
+		</TileContent>
+		    <!-- <l:HorizontalLayout class="sapUiContentPadding" >
+                <mvc:XMLView viewName="com.dla.webstat.view.statistics.Chart"/>
+                <mvc:XMLView viewName="com.dla.webstat.view.statistics.Table"/>
+            </l:HorizontalLayout> -->
+
+			<!-- <Panel id="statisticsContainer" class="sapUiNoContentPadding">
+				<headerToolbar>
+					<Toolbar>
+						<Title
+							text="{i18n>shopStatisticsTitle}"
+							level="H4"
+							textAlign="Left"/>
+						<ToolbarSpacer/>
+						<Button
+							id="refresh"
+							icon="sap-icon://refresh"
+							press="onRefresh"
+							tooltip="{i18n>refreshButtonTooltip}"/>
+					</Toolbar>
+				</headerToolbar>
+			</Panel> -->
+		</content>
+        </IconTabBar>
+	</Page>
+</mvc:View>

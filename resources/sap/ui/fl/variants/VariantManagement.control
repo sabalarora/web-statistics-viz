@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<control xmlns="http://www.sap.com/sap.ui.library.xsd">
+    <name>variants/VariantManagement</name>
+    <derived/>
+    <documentation>The VariantManagement control can be used to manage variants, such as filter bar variants or table variants.</documentation>
+    <since>1.50</since>
+    <developmentState state="experimental" since="1.50">This class is experimental and provides only limited functionality. Also the API might be changed in future.</developmentState>
+    <baseType>sap.ui.core/Control</baseType>
+    <properties>
+        <property name="showExecuteOnSelection" type="sap.ui.core/boolean" defaultValue="false" group="Misc">
+            <documentation>Indicates that Execute on Selection is visible in the Save Variant and the Manage Variants dialogs.</documentation>
+        </property>
+        <property name="showShare" type="sap.ui.core/boolean" defaultValue="false" group="Misc">
+            <documentation>Indicates that Share is visible in the Save Variant and the Manage Variants dialogs. Share allows you to share variants with other
+users.</documentation>
+        </property>
+        <property name="showSetAsDefault" type="sap.ui.core/boolean" defaultValue="true" group="Misc">
+            <documentation>Indicates that set as default is visible in the Save Variant and the Manage Variants dialogs.</documentation>
+        </property>
+        <property name="showFavorites" type="sap.ui.core/boolean" defaultValue="false" group="Misc">
+            <documentation>Indicates if favorites can be created.</documentation>
+        </property>
+        <property name="industrySolutionMode" type="sap.ui.core/boolean" defaultValue="false" group="Misc">
+            <documentation>If set to&lt;code&gt;true&lt;/code&gt;, the scenario is an industry-specific solution.&lt;br&gt;
+&lt;b&gt;Node:&lt;/b&gt;This flag is only used internally in the app variant scenarios.</documentation>
+        </property>
+        <property name="vendorLayer" type="sap.ui.core/boolean" defaultValue="false" group="Misc">
+            <documentation>Indicates if the vendor layer is active.&lt;br&gt;
+&lt;b&gt;Node:&lt;/b&gt;This flag is only used internally in the app variant scenarios.</documentation>
+        </property>
+        <property name="manualVariantKey" type="sap.ui.core/boolean" defaultValue="false" group="Misc">
+            <documentation>If set to&lt;code&gt;true&lt;/code&gt;, the key for a vendor variant will be added manually.&lt;br&gt;
+&lt;b&gt;Node:&lt;/b&gt;This flag is only used internally in the app variant scenarios.</documentation>
+        </property>
+        <property name="showSave" type="sap.ui.core/boolean" defaultValue="true" group="Misc">
+            <documentation>Determine the visibility of the 'Save' button in the variant list control.</documentation>
+        </property>
+        <property name="showSaveAs" type="sap.ui.core/boolean" defaultValue="true" group="Misc">
+            <documentation>Determine the visibility of the 'Save As' button in the variant list control.</documentation>
+        </property>
+        <property name="showManage" type="sap.ui.core/boolean" defaultValue="true" group="Misc">
+            <documentation>Determine the visibility of the 'Manage' button in the variant list control.</documentation>
+        </property>
+        <property name="showVariantListFooter" type="sap.ui.core/boolean" defaultValue="true" group="Misc">
+            <documentation>Determine the visibility of the footer of the variant list.</documentation>
+        </property>
+        <property name="inErrorState" type="sap.ui.core/boolean" defaultValue="false" group="Misc">
+            <documentation>Indicates that the control is in error state. If set to &lt;code&gt;true&lt;/code&gt; error message will be displayed whenever the variant is
+opened.</documentation>
+        </property>
+    </properties>
+    <events>
+        <event name="save" allowPreventDefault="false">
+            <documentation>This event is fired when the Save Variant dialog is closed with OK for a variant.</documentation>
+            <parameters>
+                <parameter name="name" type="sap.ui.core/string">
+                    <documentation>The variant title</documentation>
+                </parameter>
+                <parameter name="overwrite" type="sap.ui.core/boolean">
+                    <documentation>Indicates if an existing variant is overwritten or if a new variant is created</documentation>
+                </parameter>
+                <parameter name="key" type="sap.ui.core/string">
+                    <documentation>The variant key</documentation>
+                </parameter>
+                <parameter name="execute" type="sap.ui.core/boolean">
+                    <documentation>The Execute on Selection indicator</documentation>
+                </parameter>
+                <parameter name="def" type="sap.ui.core/boolean">
+                    <documentation>The default variant indicator</documentation>
+                </parameter>
+                <parameter name="global" type="sap.ui.core/boolean">
+                    <documentation>The shared variant indicator</documentation>
+                </parameter>
+                <parameter name="lifecyclePackage" type="sap.ui.core/string">
+                    <documentation>The package name</documentation>
+                </parameter>
+                <parameter name="lifecycleTransportId" type="sap.ui.core/string">
+                    <documentation>The transport ID</documentation>
+                </parameter>
+            </parameters>
+        </event>
+        <event name="manage" allowPreventDefault="false">
+            <documentation>This event is fired when users apply changes to variants in the Manage Variants dialog.</documentation>
+        </event>
+    </events>
+    <associations>
+        <association name="for" type="sap.ui.core/Control" cardinality="0..n">
+            <documentation>Contains the controls, for which the variant management is responsible.</documentation>
+        </association>
+    </associations>
+</control>

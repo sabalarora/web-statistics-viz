@@ -1,0 +1,1 @@
+sap.ui.define([],function(){"use strict";return c;function c(u){var C=u&&u.services&&u.services.Container&&u.services.Container.adapter&&u.services.Container.adapter.config;var d=C&&C.userProfile&&C.userProfile.defaults&&C.userProfile.defaults.theme;var p=C&&C.userProfilePersonalization&&C.userProfilePersonalization.theme;var a=p||d;if(a){sap.ui.getCore().applyTheme(a);}}});
