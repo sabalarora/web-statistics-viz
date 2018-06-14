@@ -3,13 +3,12 @@
 
     <viz:VizFrame id="idVizFrame" uiConfig="{applicationSet:'fiori'}" height='100%' width="100%" vizType='bar'>
         <viz:dataset>
-            <viz.data:FlattenedDataset data="{/milk}">
+            <viz.data:FlattenedDataset data="{/barchart}">
                 <viz.data:dimensions>
                     <viz.data:DimensionDefinition name="Store Name" value="{Store Name}" />
                 </viz.data:dimensions>
                 <viz.data:measures>
                     <viz.data:MeasureDefinition name="Revenue" value="{Revenue}" />
-                    <viz.data:MeasureDefinition name="Cost" value="{Cost}" />
                 </viz.data:measures>
             </viz.data:FlattenedDataset>
         </viz:dataset>

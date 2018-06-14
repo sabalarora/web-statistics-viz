@@ -12,8 +12,21 @@
                 <Property Name="Hits" Type="Edm.Int"/>
                 <Property Name="Hours" Type="Edm.String"/>
             </EntityType>
+            <EntityType Name="BarChart">
+                <Key>
+                    <PropertyRef Name="Store Name"/>
+                    <PropertyRef Name="Revenue"/>
+                    <PropertyRef Name="Cost"/>
+                    <PropertyRef Name="Consumption"/>
+                </Key>
+                <Property Name="Store Name" Type="Edm.String"/>
+                <Property Name="Revenue" Type="Edm.Int"/>
+                <Property Name="Cost" Type="Edm.Int"/>
+                <Property Name="Consumption" Type="Edm.Int"/>
+            </EntityType>
             <EntityContainer Name="NorthwindEntities">
                 <EntitySet Name="heatmapdaily" EntityType="NorthwindModel.Heatmap"/>
+                <EntitySet Name="barchart" EntityType="NorthwindModel.BarChart"/>
             </EntityContainer>
         </Schema>
     </edmx:DataServices>
