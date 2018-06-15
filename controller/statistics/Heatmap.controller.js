@@ -97,7 +97,7 @@ sap.ui.define([
                         }
                     },
                     dataLabel: {
-                        formatString:formatPattern.SHORTFLOAT_MFD2,
+                        formatString:formatPattern.STANDARDINTEGER,
                         visible: false
                     }
                 },
@@ -126,13 +126,14 @@ sap.ui.define([
             this.oVizFrame.setVizScales([{
                 name : "8 Sections",
                 value : [{
-                    "feed": "color",
-                    "type": "color",
-                    "numOfSegments": 8,
-                    "palette": ["sapUiChartPaletteSequentialHue3Dark1", "sapUiChartPaletteSequentialHue3",
-                        "sapUiChartPaletteSequentialHue3Light1", "sapUiChartPaletteSequentialHue3Light2", 
-                        "sapUiChartPaletteSequentialHue1Light2", "sapUiChartPaletteSequentialHue1Light1", 
-                        "sapUiChartPaletteSequentialHue1", "sapUiChartPaletteSequentialHue1Dark1"]
+                    name : "3 Sections",
+                    value : [{
+                        "feed": "color",
+                        "type": "color",
+                        "numOfSegments": 3,
+                        "palette": ["sapUiChartPaletteSequentialHue1Light2", "sapUiChartPaletteSequentialHue1", 
+                            "sapUiChartPaletteSequentialHue1Dark2"]
+                    }]
                 }]
             }]);
             this.oModel = oModel;

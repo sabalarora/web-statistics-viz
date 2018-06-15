@@ -2,8 +2,10 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     'sap/viz/ui5/data/FlattenedDataset',
     'sap/viz/ui5/controls/common/feeds/FeedItem',
-    "sap/ui/model/json/JSONModel"
-], function(Controller, FlattenedDataset, FeedItem, JSONModel){
+	"sap/ui/model/json/JSONModel",
+	"sap/ui/model/odata/v2/ODataModel",
+	"com/dla/webstat/constants"
+], function(Controller, FlattenedDataset, FeedItem, JSONModel, ODataModel, APP_CONSTANTS){
     "use strict";
     return Controller.extend("com.dla.webstat.controller.statistics.Chart",{
         onInit: function(){
@@ -59,8 +61,10 @@ sap.ui.define([
 		},
         _updateVizFrame: function(vizFrame) {
 			var oVizFrame = this._constants.vizFrame;
-			var oVizFramePath = jQuery.sap.getModulePath(this._constants.sampleName, oVizFrame.modulePath);
-			var oModel = new JSONModel(oVizFramePath);
+			//var oVizFramePath = jQuery.sap.getModulePath(this._constants.sampleName, oVizFrame.modulePath);
+			//var oModel = new JSONModel(oVizFramePath);
+			var oModel = new ODataModel(APP_CONSTANTS.WEB_STATISTICS_ODATA_SERVICE_URL, true);
+
 			var oDataset = new FlattenedDataset(oVizFrame.dataset);
 
 			vizFrame.setVizProperties(oVizFrame.properties);

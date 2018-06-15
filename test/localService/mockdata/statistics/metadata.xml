@@ -4,29 +4,57 @@
         <Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="NorthwindModel">
             <EntityType Name="Heatmap">
                 <Key>
-                    <PropertyRef Name="App Name"/>
+                    <PropertyRef Name="Time"/>
                     <PropertyRef Name="Hits"/>
-                    <PropertyRef Name="Hour"/>
+                    <PropertyRef Name="Day"/>
                 </Key>
                 <Property Name="Time" Type="Edm.String"/>
                 <Property Name="Hits" Type="Edm.Int"/>
-                <Property Name="Hours" Type="Edm.String"/>
+                <Property Name="Day" Type="Edm.String"/>
             </EntityType>
             <EntityType Name="BarChart">
                 <Key>
-                    <PropertyRef Name="Store Name"/>
-                    <PropertyRef Name="Revenue"/>
-                    <PropertyRef Name="Cost"/>
-                    <PropertyRef Name="Consumption"/>
+                    <PropertyRef Name="Category"/>
+                    <PropertyRef Name="Total"/>
                 </Key>
-                <Property Name="Store Name" Type="Edm.String"/>
-                <Property Name="Revenue" Type="Edm.Int"/>
-                <Property Name="Cost" Type="Edm.Int"/>
-                <Property Name="Consumption" Type="Edm.Int"/>
+                <Property Name="Category" Type="Edm.String"/>
+                <Property Name="Total" Type="Edm.Int"/>
+            </EntityType>
+            <EntityType Name="LineChart">
+                <Key>
+                    <PropertyRef Name="Hits"/>
+                    <PropertyRef Name="Users"/>
+                     <PropertyRef Name="Time"/>
+                </Key>
+                <Property Name="Hits" Type="Edm.Int"/>
+                <Property Name="Users" Type="Edm.Int"/>
+                <Property Name="Time" Type="Edm.Int"/>
+            </EntityType>
+            <EntityType Name="TableChart">
+                <Key>
+                    <PropertyRef Name="timestamphour"/>
+                    <PropertyRef Name="aggregationlevel"/>
+                    <PropertyRef Name="content"/>
+                    <PropertyRef Name="pcdurl"/>
+                    <PropertyRef Name="objecttype"/>
+                    <PropertyRef Name="visits"/>
+                    <PropertyRef Name="custom"/>
+                    <PropertyRef Name="id"/>
+                </Key>
+                <Property Name="timestamphour" Type="Edm.String"/>
+                <Property Name="aggregationlevel" Type="Edm.String"/>
+                <Property Name="content" Type="Edm.String"/>
+                <Property Name="pcdurl" Type="Edm.String"/>
+                <Property Name="objecttype" Type="Edm.String"/>
+                <Property Name="visits" Type="Edm.String"/>
+                <Property Name="custom" Type="Edm.String"/>
+                <Property Name="id" Type="Edm.String"/>
             </EntityType>
             <EntityContainer Name="NorthwindEntities">
                 <EntitySet Name="heatmapdaily" EntityType="NorthwindModel.Heatmap"/>
                 <EntitySet Name="barchart" EntityType="NorthwindModel.BarChart"/>
+                <EntitySet Name="linechart" EntityType="NorthwindModel.LineChart"/>
+                <EntitySet Name="table-daily" EntityType="NorthwindModel.TableChart"/>
             </EntityContainer>
         </Schema>
     </edmx:DataServices>

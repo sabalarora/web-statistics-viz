@@ -6,25 +6,25 @@
      <viz:VizFrame id="idVizFrame" uiConfig="{applicationSet:'fiori'}"
                 height='100%' width="100%" vizType='line'>
                 <viz:dataset>
-                    <viz.data:FlattenedDataset data="{/milk}">
+                    <viz.data:FlattenedDataset data="{/linechart}">
                         <viz.data:dimensions>
-                            <viz.data:DimensionDefinition name="Week"
-                                value="{Week}" />
+                            <viz.data:DimensionDefinition name="Time"
+                                value="{Time}" />
                         </viz.data:dimensions>
                         <viz.data:measures>
-                            <viz.data:MeasureDefinition name="Revenue"
-                                value="{Revenue}" />
-                            <viz.data:MeasureDefinition name="Cost"
-                                value="{Cost}" />
+                            <viz.data:MeasureDefinition name="Hits"
+                                value="{Hits}" />
+                            <viz.data:MeasureDefinition name="Users"
+                                value="{Users}" />
                         </viz.data:measures>
                     </viz.data:FlattenedDataset>
                 </viz:dataset>
 
                 <viz:feeds>
                     <viz.feeds:FeedItem id='valueAxisFeed' uid="valueAxis" type="Measure"
-                        values="Revenue" />
+                        values="Hits" />
                     <viz.feeds:FeedItem id='categoryAxisFeed' uid="categoryAxis" type="Dimension"
-                        values="Week" />
+                        values="Time" />
                 </viz:feeds>
             </viz:VizFrame>
 
