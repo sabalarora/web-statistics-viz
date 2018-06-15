@@ -42,7 +42,8 @@ sap.ui.define([
             });
             var feedValueAxis = this.getView().byId('valueAxisFeed');
             this.oVizFrame.removeFeed(feedValueAxis);
-            feedValueAxis.setValues(["Hits", "Users"]);
+
+            feedValueAxis.setValues(["Hits", "LastWeeksHits"]);
             this.oVizFrame.addFeed(feedValueAxis);
 
             var dataModel = new ODataModel(APP_CONSTANTS.WEB_STATISTICS_ODATA_SERVICE_URL, true);

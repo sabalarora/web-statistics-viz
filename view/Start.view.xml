@@ -6,7 +6,7 @@
 	xmlns:layout="sap.ui.layout"
 	xmlns:microchart="sap.suite.ui.microchart">
 	
-	 <mvc:XMLView viewName="com.dla.webstat.view.statistics.Heatmap"/>
+	 <!-- <mvc:XMLView viewName="com.dla.webstat.view.statistics.Heatmap"/> -->
 	  		 <!-- <mvc:XMLView viewName="com.dla.webstat.view.statistics.Bar"/>  -->
-			<!-- <mvc:XMLView viewName="com.dla.webstat.view.statistics.Line"/> -->
+			<mvc:XMLView viewName="com.dla.webstat.view.statistics.Line"/>
 </mvc:View>
