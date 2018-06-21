@@ -21,9 +21,10 @@ sap.ui.define([
             default: Bar
         },
         _onObjectMatched: function(oEvent) {
+         
             var args = oEvent.mParameters.arguments;
             var sValue = jQuery.sap.getUriParameters();
-            debugger;
+         
             // this checks and finds the correct viz settings
             var chartSettings = (this._chartTypes[args.chartType])
                                     ? this._chartTypes[args.chartType]
@@ -31,7 +32,14 @@ sap.ui.define([
             var collection = (args.collection)
                 ? "/" + args.collection 
                 : null;
-            this._onParseSettings(APP_CONSTANTS.WEB_STATISTICS_ODATA_SERVICE_URL, chartSettings, collection);
+            var measuresToHide = args["?query"].hideMeasures;
+        
+            this._onParseSettings(
+                APP_CONSTANTS.WEB_STATISTICS_ODATA_SERVICE_URL, 
+                chartSettings, 
+                collection,
+                measuresToHide
+            );
 
             // oEvent.mParameters.arguments.chartType
             // oEvent.mParameters.arguments.collection
@@ -45,9 +53,12 @@ sap.ui.define([
         onSelectionChange: function(oEvent){
             var params = {
                 chartType: "bar", 
-                showMeasures: {
-                    tab : _aValidTabKeys[0]
-                } 
+                collection: "barchart",
+                query: {
+                    hideMeasures: [
+                        'Total'
+                    ]
+                }
             };
             this.getRouter().navTo("master", params);
             // var oParent = oEvent.oSource.getParent();
@@ -55,7 +66,7 @@ sap.ui.define([
             // var oVizFrame = this.byId("idoVizFrame");
             // oVizFrame.removeFeed(0);
         },
-        _onParseSettings: function(oDataService, settingsObject, collection){
+        _onParseSettings: function(oDataService, settingsObject, collection, hideMeasures){
      
             this.setModel(new JSONModel(settingsObject));
             var oVizFrame =   this.oVizFrame = this.getView().byId("idoVizFrame", "/");
@@ -72,6 +83,11 @@ sap.ui.define([
             // if(agg.feeds){
             //     oVizFrame.destroyFeeds();
             // }
+
+            // hideMeasures.split(",").forEach(function(value){
+            //     debugger;
+
+            // })
             var amModel = new ODataModel(oDataService, true);
          
             settingsObject.dataset.data.path = collection;
@@ -79,6 +95,7 @@ sap.ui.define([
             oVizFrame.setVizType(settingsObject.type);
             oVizFrame.setVizProperties(settingsObject.properties);
             oVizFrame.setDataset(oDataset);
+            debugger;
             settingsObject.feedItems.forEach(function(value){
                 var item = new FeedItem(value);
                 oVizFrame.addFeed(item);
@@ -120,13 +137,20 @@ sap.ui.define([
           
             //titleModel.setProperty("title", {name: "Wefihbfihbwehifibwehiefwbewf"});
 
-
-
+            var oRouter = this.getRouter();
+            oRouter.getRoute("master").attachMatched(this._onObjectMatched, this);
             
             //var oRouter = this.getRouter();
             //var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
            // oRouter.getRoute("master").attachPatternMatched(this._onObjectMatched, this);
-            this.getRouter().attachRoutePatternMatched(this._onObjectMatched, this);
+            
+           
+           //this.getRouter().attachRoutePatternMatched(this._onObjectMatched, this);
+
+
+
+
+
             // Format.numericFormatter(ChartFormatter.getInstance());
             // var formatPattern = ChartFormatter.DefaultPattern;
             // this._onParseSettings(APP_CONSTANTS.WEB_STATISTICS_ODATA_SERVICE_URL, Bar);

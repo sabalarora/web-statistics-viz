@@ -68,7 +68,7 @@
                     "target": "statistics"
                 },
                 {
-					"pattern": "NewStatistics/:chartType:/:collection:/:aggregation::?showMeasures:",
+					"pattern": "NewStatistics/{chartType}/{collection}:?query:",
 					"name": "master",
 					"target": [
 						"object",
