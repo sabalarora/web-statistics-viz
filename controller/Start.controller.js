@@ -51,6 +51,12 @@ sap.ui.define([
             oRouter.navTo("webcontentodata", {
                 interval: "monthly"
             });
+        },
+        onTileButtonClicked: function(oEvent){
+            debugger;
+            var element = this.byId("heatmap");
+            
+            heatmap.setVisible(false);
         }
     });
 });
