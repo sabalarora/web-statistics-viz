@@ -9,9 +9,11 @@ sap.ui.define([
         onSideNavButtonPress: function() {
             var oToolPage = this.byId("app");
             var bSideExpanded = oToolPage.getSideExpanded();
-            this._setToggleButtonTooltip(bSideExpanded);
+            //this._setToggleButtonTooltip(bSideExpanded);
             oToolPage.setSideExpanded(!oToolPage.getSideExpanded());
+
         },
+    
         onItemSelect: function(oEvent) {
             var oItem = oEvent.getParameter('item');
             var sKey = oItem.getKey();

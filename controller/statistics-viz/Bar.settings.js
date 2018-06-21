@@ -4,6 +4,8 @@ sap.ui.define([
 ], function (jQuery,ChartFormatter) {
     "use strict";
     var formatPattern = ChartFormatter.DefaultPattern;
+
+    //      path: "/barchart"
     return {
         type: "bar",
         dataset: {
@@ -16,7 +18,7 @@ sap.ui.define([
                 value: '{Total}'
             }],
             data: {
-                path: "/barchart"
+                path: null //is the collection name
             }
         },
         feedItems: [{
@@ -61,7 +63,8 @@ sap.ui.define([
                 type: 'action',
                 text: 'Show Heatmap',
                 route: {
-                    params: 4444
+                    chartType: "Heatmap",
+                    collection: "heatmapdaily"
                 }
             }
         ],

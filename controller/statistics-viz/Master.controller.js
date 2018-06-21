@@ -7,58 +7,92 @@ sap.ui.define([
     'sap/viz/ui5/api/env/Format',
     "sap/viz/ui5/format/ChartFormatter",
     "./Heatmap.settings",
-    "./Bar.settings"
-], function(jQuery, Controller,ODataModel,APP_CONSTANTS,JSONModel,Format,ChartFormatter, HeatmapA, Bar) {
+    "./Bar.settings",
+    "sap/viz/ui5/data/FlattenedDataset",
+    "sap/viz/ui5/controls/common/feeds/FeedItem",
+    "sap/viz/ui5/controls/Popover"
+], function(jQuery, Controller,ODataModel,APP_CONSTANTS,JSONModel,Format,ChartFormatter, HeatmapA, Bar, FlattenedDataset, FeedItem, Popover) {
     "use strict";
+    var _aValidTabKeys = ["Info", "Projects", "Hobbies", "Notes"];
     return Controller.extend("com.dla.webstat.controller.statistics-viz.Master",{
-        _onObjectMatched: function(oEvent) {
-            if(!oEvent.mParameters.arguments.chartIndex){
-                this._onParseSettings(APP_CONSTANTS.WEB_STATISTICS_ODATA_SERVICE_URL, Bar);
-            }else{
-                this._onParseSettings(APP_CONSTANTS.WEB_STATISTICS_ODATA_SERVICE_URL, HeatmapA);
-            }
+        _chartTypes: {
+            bar: Bar,
+            Heatmap: HeatmapA,
+            default: Bar
         },
-        switchChartByIndex: function(chartIndex) {
-            if (chartIndex == "Bar") {
-              this.oVizFrame.setVizType('bar');
-            };
-            if (chartIndex == "Line") {
-              this.oVizFrame.setVizType('line');
-            };
-            if (chartIndex == "Column") {
-              this.oVizFrame.setVizType("column")
-            };
-            if (chartIndex == "Stacked_Column") {
-              this.oVizFrame.setVizType("stacked_column")
-            };
+        _onObjectMatched: function(oEvent) {
+            var args = oEvent.mParameters.arguments;
+            var sValue = jQuery.sap.getUriParameters();
+            debugger;
+            // this checks and finds the correct viz settings
+            var chartSettings = (this._chartTypes[args.chartType])
+                                    ? this._chartTypes[args.chartType]
+                                    : this._chartTypes["default"];
+            var collection = (args.collection)
+                ? "/" + args.collection 
+                : null;
+            this._onParseSettings(APP_CONSTANTS.WEB_STATISTICS_ODATA_SERVICE_URL, chartSettings, collection);
+
+            // oEvent.mParameters.arguments.chartType
+            // oEvent.mParameters.arguments.collection
+            // oEvent.mParameters.arguments.aggregation
+            // if(!oEvent.mParameters.arguments.chartType){
+            //     this._onParseSettings(APP_CONSTANTS.WEB_STATISTICS_ODATA_SERVICE_URL, Bar);
+            // }else{
+            //     this._onParseSettings(APP_CONSTANTS.WEB_STATISTICS_ODATA_SERVICE_URL, HeatmapA);
+            // }
         },
         onSelectionChange: function(oEvent){
-            debugger;
+            var params = {
+                chartType: "bar", 
+                showMeasures: {
+                    tab : _aValidTabKeys[0]
+                } 
+            };
+            this.getRouter().navTo("master", params);
+            // var oParent = oEvent.oSource.getParent();
+            // oParent.oVizFrame;
+            // var oVizFrame = this.byId("idoVizFrame");
+            // oVizFrame.removeFeed(0);
         },
-        _onParseSettings: function(oDataService, settingsObject){
+        _onParseSettings: function(oDataService, settingsObject, collection){
+     
             this.setModel(new JSONModel(settingsObject));
-         
-            var oVizFrame = this.getView().byId("idoVizFrame", "/");
-            // oVizFrame.destroyDataset();
-            // oVizFrame.destroyFeeds();
+            var oVizFrame =   this.oVizFrame = this.getView().byId("idoVizFrame", "/");
+          
+            oVizFrame.destroyDataset();
+            oVizFrame.destroyFeeds();
+            // if(oVizFrame.getDataset()){
+               
+            // }
+            // if(typeof oVizFrame.mAggregations.feeds != "undefined"){
+                
+            // }
+            // var agg = oVizFrame.mAggregations;
+            // if(agg.feeds){
+            //     oVizFrame.destroyFeeds();
+            // }
             var amModel = new ODataModel(oDataService, true);
-            var oDataset = new sap.viz.ui5.data.FlattenedDataset(settingsObject.dataset);
-            oVizFrame.setDataset(oDataset);
-            oVizFrame.setModel(amModel);
-            
-            settingsObject.feedItems.forEach(function(value){
-                var item = new sap.viz.ui5.controls.common.feeds.FeedItem(value);
-                oVizFrame.addFeed(item);
-            });
+         
+            settingsObject.dataset.data.path = collection;
+            var oDataset = new FlattenedDataset(settingsObject.dataset);
             oVizFrame.setVizType(settingsObject.type);
             oVizFrame.setVizProperties(settingsObject.properties);
+            oVizFrame.setDataset(oDataset);
+            settingsObject.feedItems.forEach(function(value){
+                var item = new FeedItem(value);
+                oVizFrame.addFeed(item);
+            });
+            oVizFrame.setModel(amModel);
             this.settingsObject = settingsObject.actionItems;
             var popoverProps = {};
-            var chartPopover = new sap.viz.ui5.controls.Popover(popoverProps);
+            var chartPopover = new Popover(popoverProps);
             chartPopover.setActionItems(this.onAddClickEventToItems(settingsObject.actionItems));
             chartPopover.connect(oVizFrame.getVizUid());
         },
         onAddClickEventToItems: function(actionItems){
+        //     this.getRouter().navTo("master", {chartIndex: "bar",
+        // ewfwfe: "ewfww"});
             var masterThis = this;
             return actionItems.map(function(value){
                 value.press = masterThis.onItemClick.bind(masterThis);
@@ -69,13 +103,26 @@ sap.ui.define([
             var objectData = this.settingsObject.filter(function(value){
                 return value.text == event.oSource.mProperties.text;
             });
+        debugger;
 
-            this.getRouter().navTo("master", {chartIndex: "bar"});
+            this.getRouter().navTo("master", objectData[0].route);
+            // this.getRouter().navTo("master", {
+            //     chartType: "Heatmap",
+            //     collection: "heatmapdaily"
+            // });
             // if(event.oSource.mProperties.text == "Show Heatmap"){
             //     this._onParseSettings(APP_CONSTANTS.WEB_STATISTICS_ODATA_SERVICE_URL, HeatmapA);
             // }
         },
         onInit: function() {
+            var titleModel = new JSONModel({name: "dfsfsfdds"});
+            this.setModel(titleModel, "title");
+          
+            //titleModel.setProperty("title", {name: "Wefihbfihbwehifibwehiefwbewf"});
+
+
+
+            
             //var oRouter = this.getRouter();
             //var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
            // oRouter.getRoute("master").attachPatternMatched(this._onObjectMatched, this);

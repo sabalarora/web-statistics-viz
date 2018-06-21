@@ -2,6 +2,7 @@ sap.ui.define([
 
 ], function () {
     "use strict";
+    // path: "/heatmapdaily"
     return {
         type: "heatmap",
         dataset: {
@@ -18,7 +19,7 @@ sap.ui.define([
                 },
               ],
               data: {
-                path: "/heatmapdaily"
+                path: null // is the collection name
               }
         },
         feedItems: [{

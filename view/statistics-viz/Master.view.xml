@@ -4,8 +4,20 @@
 		<semantic:subHeader>
 		</semantic:subHeader>
 		<semantic:content>
-			<List id="MeasureList" mode="MultiSelect" includeItemInSelection="true"
-			items="{
+			<Toolbar class="measureToolBar">
+				<Label text="Aggregation Level" class="toolBarTextHeader"></Label>
+			</Toolbar>
+
+			<Select id="selectPopover" width="100%" name="test" class="selectPop">
+				<items>
+					<core:Item text="Default" key="Default" />
+				</items>
+				<items>
+					<core:Item text="Customer Popover" key="Customer_Popover" />
+				</items>
+			</Select>
+
+			<List id="MeasureList" mode="MultiSelect" selectionChange="onSelectionChange" includeItemInSelection="true" items="{
 					path: '/dataset/measures'
 				}">
 				<headerToolbar>
@@ -14,19 +26,14 @@
 					</Toolbar>
 				</headerToolbar>
 				<items>
-					<StandardListItem
-
-						press="onSelectionChange"
-						title="{name}"
-						selected="true">
+					<StandardListItem  title="{name}">
 					</StandardListItem>
 				</items>
 				<!-- <StandardListItem id="Profit" title="Profit" description="profit" selected="true" />
 				<StandardListItem id="Cost" title="Cost" description="cost" selected="true" />
 				<StandardListItem id="Revenue" title="Revenue" description="revenue" selected="true" /> -->
 			</List>
-			<List id="ApplicationList" mode="MultiSelect" includeItemInSelection="true"
-			items="{
+			<List id="ApplicationList" mode="MultiSelect" includeItemInSelection="true" items="{
 					path: '/applications'
 				}">
 				<headerToolbar>
@@ -35,11 +42,7 @@
 					</Toolbar>
 				</headerToolbar>
 				<items>
-					<StandardListItem
-						type="{= ${device>/system/phone} ? 'Active' : 'Inactive'}"
-						press="onSelectionChange"
-						title="{name}"
-						numberUnit="{UnitOfMeasure}">
+					<StandardListItem type="{= ${device>/system/phone} ? 'Active' : 'Inactive'}" press="onSelectionChange" title="{name}" numberUnit="{UnitOfMeasure}">
 					</StandardListItem>
 				</items>
 				<!-- <StandardListItem id="Profit" title="Profit" description="profit" selected="true" />
