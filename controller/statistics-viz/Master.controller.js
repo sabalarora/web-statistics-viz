@@ -32,7 +32,8 @@ sap.ui.define([
             var collection = (args.collection)
                 ? "/" + args.collection 
                 : null;
-            var measuresToHide = args["?query"].hideMeasures;
+
+            var measuresToHide = (args["?query"])? args["?query"].hideMeasures.split(","):null;
         
             this._onParseSettings(
                 APP_CONSTANTS.WEB_STATISTICS_ODATA_SERVICE_URL, 
@@ -51,15 +52,22 @@ sap.ui.define([
             // }
         },
         onSelectionChange: function(oEvent){
+           
+            var measures = [];
+            var query = {};
+            if(oEvent.getParameters().listItem.isSelected()){
+                measures.push(oEvent.getParameters().listItem.getTitle());
+                query.hideMeasures = measures;
+            }else{
+                query.hideMeasures = measures;
+            }
+         
+            //oEvent.getParameters().listItem.getTitle();
             var params = {
                 chartType: "bar", 
-                collection: "barchart",
-                query: {
-                    hideMeasures: [
-                        'Total'
-                    ]
-                }
+                collection: "barchart"
             };
+            params.query = query;
             this.getRouter().navTo("master", params);
             // var oParent = oEvent.oSource.getParent();
             // oParent.oVizFrame;
@@ -83,25 +91,27 @@ sap.ui.define([
             // if(agg.feeds){
             //     oVizFrame.destroyFeeds();
             // }
-
-            // hideMeasures.split(",").forEach(function(value){
-            //     debugger;
-
-            // })
             var amModel = new ODataModel(oDataService, true);
-         
             settingsObject.dataset.data.path = collection;
             var oDataset = new FlattenedDataset(settingsObject.dataset);
             oVizFrame.setVizType(settingsObject.type);
             oVizFrame.setVizProperties(settingsObject.properties);
             oVizFrame.setDataset(oDataset);
-            debugger;
+   
             settingsObject.feedItems.forEach(function(value){
+                if(value.type == "Measure"){
+                    if(hideMeasures){
+                        if(value.values[0] == hideMeasures[0]){
+                            return;
+                        }
+                    }
+                }
                 var item = new FeedItem(value);
                 oVizFrame.addFeed(item);
             });
             oVizFrame.setModel(amModel);
             this.settingsObject = settingsObject.actionItems;
+
             var popoverProps = {};
             var chartPopover = new Popover(popoverProps);
             chartPopover.setActionItems(this.onAddClickEventToItems(settingsObject.actionItems));
@@ -120,7 +130,7 @@ sap.ui.define([
             var objectData = this.settingsObject.filter(function(value){
                 return value.text == event.oSource.mProperties.text;
             });
-        debugger;
+   
 
             this.getRouter().navTo("master", objectData[0].route);
             // this.getRouter().navTo("master", {

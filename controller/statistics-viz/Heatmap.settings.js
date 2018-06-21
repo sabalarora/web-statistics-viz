@@ -53,6 +53,7 @@ sap.ui.define([
                 visible: true,
                 text: 'Profit and Cost and Revenue by Item Category'
             }
-        }
+        },
+        actionItems:[]
     };
 });

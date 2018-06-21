@@ -17,7 +17,8 @@
 				</items>
 			</Select>
 
-			<List id="MeasureList" mode="MultiSelect" selectionChange="onSelectionChange" includeItemInSelection="true" items="{
+			<List id="MeasureList" mode="MultiSelect" selectionChange="onSelectionChange" includeItemInSelection="true" 
+				items="{
 					path: '/dataset/measures'
 				}">
 				<headerToolbar>
