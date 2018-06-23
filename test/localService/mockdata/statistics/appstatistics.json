@@ -1,0 +1,108 @@
+[{
+        "object": "Integrated Data Sheet",
+        "visits": "550",
+        "users": "515"
+    },
+    {
+        "object": "Pricing Tool",
+        "visits": "415",
+        "users": "348",
+        "processArea": "PR"
+    },
+    {
+        "object": "Supply Chain Dashboard",
+        "visits": "310",
+        "users": "287"
+    },
+    {
+        "object": "Batch",
+        "visits": "255",
+        "users": "230",
+        "processArea": "PR"
+    },
+    {
+        "object": "Weapon Systems",
+        "visits": "248",
+        "users": "225"
+    },
+    {
+        "object": "BDA Summary",
+        "visits": "156",
+        "users": "139"
+    },
+    {
+        "object": "BDA Supplier",
+        "visits": "131",
+        "users": "112"
+    },
+    {
+        "object": "Vendor Metrics",
+        "visits": "92",
+        "users": "71"
+    },
+    {
+        "object": "Executive Flashcard",
+        "visits": "50",
+        "users": "39"
+    },
+    {
+        "object": "Backorders",
+        "visits": "45",
+        "users": "36",
+        "processArea": "OF"
+    },
+    {
+        "object": "Requisition Scorecard Summary",
+        "visits": "88",
+        "users": "76",
+        "processArea": "OF"
+    },
+    {
+        "object": "LRT",
+        "visits": "25",
+        "users": "22",
+        "processArea": "OF"
+    },
+    {
+        "object": "Active Deliquency",
+        "visits": "325",
+        "users": "254",
+        "processArea": "PR"
+    },
+    {
+        "object": "Procurement Scorecard Summary",
+        "visits": "156",
+        "users": "136",
+        "processArea": "PR"
+    },
+    {
+        "object": "Purchase Requisitions",
+        "visits": "192",
+        "users": "166",
+        "processArea": "PR"
+    },
+    {
+        "object": "ES Overall Performance",
+        "visits": "92",
+        "users": "81",
+        "processArea": "TQ"
+    },
+    {
+        "object": "Average Released Performance",
+        "visits": "101",
+        "users": "99",
+        "processArea": "TQ"
+    },
+    {
+        "object": "DLA Operating Result",
+        "visits": "324",
+        "users": "297",
+        "processArea": "FI"
+    },
+    {
+        "object": "DWWCF Cash",
+        "visits": "104",
+        "users": "92",
+        "processArea": "FI"
+    }
+]

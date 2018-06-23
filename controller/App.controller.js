@@ -19,7 +19,7 @@ sap.ui.define([
             var sKey = oItem.getKey();
             console.log(sKey);
             var key = sKey.split(".");
-            debugger;
+        
             this.getRouter().navTo(key[0], {
                 application: key[1],
                 interval: "All"}

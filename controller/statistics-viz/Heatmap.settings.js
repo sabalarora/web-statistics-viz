@@ -54,6 +54,7 @@ sap.ui.define([
                 text: 'Profit and Cost and Revenue by Item Category'
             }
         },
-        actionItems:[]
+        actionItems:[],
+        aggregations:[]
     };
 });

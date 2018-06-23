@@ -50,11 +50,26 @@
                 <Property Name="custom" Type="Edm.String"/>
                 <Property Name="id" Type="Edm.String"/>
             </EntityType>
+            <EntityType Name="AppStatistics">
+                <Key>
+                    <PropertyRef Name="object"/>
+                    <PropertyRef Name="visits"/>
+                    <PropertyRef Name="users"/>
+                    <PropertyRef Name="processArea"/>
+                    <PropertyRef Name="selected"/>
+                </Key>
+                <Property Name="object" Type="Edm.String"/>
+                <Property Name="visits" Type="Edm.String"/>
+                <Property Name="users" Type="Edm.String"/>
+                <Property Name="processArea" Type="Edm.String"/>
+                <Property Name="selected" Type="Edm.Boolean"/>
+            </EntityType>
             <EntityContainer Name="NorthwindEntities">
                 <EntitySet Name="heatmapdaily" EntityType="NorthwindModel.Heatmap"/>
                 <EntitySet Name="barchart" EntityType="NorthwindModel.BarChart"/>
                 <EntitySet Name="linechart" EntityType="NorthwindModel.LineChart"/>
                 <EntitySet Name="table-daily" EntityType="NorthwindModel.TableChart"/>
+                <EntitySet Name="appstatistics" EntityType="NorthwindModel.AppStatistics"/>
             </EntityContainer>
         </Schema>
     </edmx:DataServices>

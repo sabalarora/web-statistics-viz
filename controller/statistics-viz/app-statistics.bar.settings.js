@@ -4,33 +4,40 @@ sap.ui.define([
 ], function (jQuery,ChartFormatter) {
     "use strict";
     var formatPattern = ChartFormatter.DefaultPattern;
-
-    //      path: "/barchart"
     return {
         type: "bar",
         dataset: {
             dimensions: [{
-                name: 'Category',
-                value: "{Category}"
+                name: 'object',
+                value: "{object}"
             }],
             measures: [{
-                name: 'Total',
-                value: '{Total}'
+                name: 'visits',
+                value: '{visits}'
+            },{
+                name: 'users',
+                value: '{users}'
             }],
             data: {
-                path: null //is the collection name
+                path: "appstatistics", //is the collection name
+                sorter: [
+                    new sap.ui.model.Sorter({
+                        path: 'object',
+                        descending: false
+                    })
+                ]
             }
         },
         feedItems: [{
                 id: 'valueAxisFeed',
                 uid: "valueAxis",
                 type: "Measure",
-                values: ["Total"]
+                values: ["visits", "users"]
             },
             {
                 uid: "categoryAxis",
                 type: "Dimension",
-                values: ["Category"]
+                values: ["object"]
             }
         ],
         properties: {
@@ -41,9 +48,7 @@ sap.ui.define([
                 }
             },
             valueAxis: {
-                label: {
-        
-                },
+                label: { },
                 title: {
                     visible: false
                 }
@@ -54,7 +59,7 @@ sap.ui.define([
                 }
             },
             title: {
-                visible: true,
+                visible: false,
                 text: 'Total Views and Users'
             }
         },
@@ -74,7 +79,7 @@ sap.ui.define([
             },
             {
                 name: 'Monthly'
-            },
+            }
         ]
     };
 });
