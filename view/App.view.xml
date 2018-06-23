@@ -19,7 +19,7 @@
 					</layoutData>
 				</Button>
 				<ToolbarSpacer/>
-				<Title text="{i18n>appTitle}"/>
+				<!-- <Title text="{i18n>appTitle}"/> -->
 				<ToolbarSpacer/>
 				<Button
 					id="errorButton"

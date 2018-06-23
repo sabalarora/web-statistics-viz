@@ -54,7 +54,7 @@ sap.ui.define([
                 }
             },
             title: {
-                visible: true,
+                visible: false,
                 text: 'Total Views and Users'
             }
         },

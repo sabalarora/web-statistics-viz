@@ -8,14 +8,14 @@ sap.ui.define([
         type: "bar",
         dataset: {
             dimensions: [{
-                name: 'object',
+                name: 'Applications',
                 value: "{object}"
             }],
             measures: [{
-                name: 'visits',
+                name: 'Visits',
                 value: '{visits}'
             },{
-                name: 'users',
+                name: 'Users',
                 value: '{users}'
             }],
             data: {
@@ -32,12 +32,12 @@ sap.ui.define([
                 id: 'valueAxisFeed',
                 uid: "valueAxis",
                 type: "Measure",
-                values: ["visits", "users"]
+                values: ["Visits", "Users"]
             },
             {
                 uid: "categoryAxis",
                 type: "Dimension",
-                values: ["object"]
+                values: ["Applications"]
             }
         ],
         properties: {

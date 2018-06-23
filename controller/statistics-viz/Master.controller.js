@@ -10,8 +10,17 @@ sap.ui.define([
     "./app-statistics.bar.settings",
     "sap/viz/ui5/data/FlattenedDataset",
     "sap/viz/ui5/controls/common/feeds/FeedItem",
-    "sap/viz/ui5/controls/Popover"
-], function(jQuery, Controller,ODataModel,APP_CONSTANTS,JSONModel,Format,ChartFormatter, HeatmapA, Bar, FlattenedDataset, FeedItem, Popover) {
+    "sap/viz/ui5/controls/Popover",
+    "sap/ui/core/routing/History"
+], function(jQuery, 
+    Controller,
+    ODataModel,
+    APP_CONSTANTS,
+    JSONModel,
+    Format,
+    ChartFormatter, 
+    HeatmapA, 
+    Bar, FlattenedDataset, FeedItem, Popover, History) {
     "use strict";
     var _aValidTabKeys = ["Info", "Projects", "Hobbies", "Notes"];
     return Controller.extend("com.dla.webstat.controller.statistics-viz.Master",{
@@ -19,6 +28,16 @@ sap.ui.define([
             bar: Bar,
             Heatmap: HeatmapA,
             default: Bar
+        },
+        onNavButtonPress: function(oEvent){
+            var oHistory = History.getInstance();
+            var sPreviousHash = oHistory.getPreviousHash();
+            if(sPreviousHash != undefined){
+                window.history.go(-1);
+            }else{
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                oRouter.navTo("webcontent",{},true);
+            }
         },
         _onObjectMatched: function(oEvent) {
          
@@ -53,6 +72,7 @@ sap.ui.define([
         },
         measures: {},
         onSelectionChange: function(oEvent){
+            debugger;
             var measures = [];
             var query = {};
             if(oEvent.getParameters().listItem.isSelected()){
@@ -81,14 +101,42 @@ sap.ui.define([
             // var oVizFrame = this.byId("idoVizFrame");
             // oVizFrame.removeFeed(0);
         },
-        _onParseSettings: function(oDataService, settingsObject, collection, hideMeasures){
+        _covertSettingsToTree:function(headers, list){
+            var res = headers.map(function(value){
+                return {
+                    object: value.name,
+                    parentHash:value.value.replace("{","").replace("}",""),
+                    node: null
+                };
+            });
+debugger;
+            var hash = {};
+            var settingsTree = list.reduce(function(agg, currVal, currIndex){
 
+                agg.map(function(value){
+                    if(!value.node){
+                        value.node = [];    
+                    }
+                  
+                    if(!hash[currVal[value.parentHash]]){
+                        value.node.push({object: currVal[value.parentHash]});
+                        debugger;
+                        hash[currVal[value.object]] = currVal[value.parentHash];
+                    }
+                    
+                    return value;
+                });
+                return agg;
+            },res);
+  
+            return settingsTree;
+        },
+        _onParseSettings: function(oDataService, settingsObject, collection, hideMeasures){
             var re = new JSONModel(settingsObject);
             this.setModel(re);
             var oVizFrame = this.oVizFrame;
             this.oVizFrame.destroyDataset();
             this.oVizFrame.destroyFeeds();
-            
             settingsObject.dataset.data.path = collection;
             var amModel = new ODataModel(oDataService, true);
             amModel.attachBatchRequestCompleted(function(response, tre){
@@ -96,32 +144,17 @@ sap.ui.define([
                 this.detailPage = sap.ui.getCore().byId("__component0---detail--detailPage");
                 this.detailPage.setTitle(settingsObject.properties.title.text);
                 var dims = settingsObject.dataset.dimensions;
-                var r = Object.values(response.getSource().oData)
-                    .map(function(values){
-                        return {'object' : values[dims[0].name]};
-                    });
-
+                var r = Object.values(response.getSource().oData);
                 
-                var er = [];
-                r.forEach(function(value){
-                    if(!er[value["object"]]){
-                        er[value["object"]] = value;
-                    }
-                });
-               r = Object.keys(er).map(function(value){
-                   return {object : value};
-               });
-               
+                var r = this._covertSettingsToTree(dims, r);
+             
                 this.oAppList.setModel(new JSONModel(r));
+                this.oAppList.expandToLevel(3);
             }.bind(this));
+ 
             var oDataset = new FlattenedDataset(settingsObject.dataset);
             this.oVizFrame.setDataset(oDataset);
             this.oVizFrame.setModel(amModel);
-            
-            //this.setModel(amModel);
-            //this.setModel(new JSONModel({names: ["ffffff"]}), "vm");
-            //sap.ui.getCore().setModel(new JSONModel({names: ["ffffff"]}), "vm");
-          
             settingsObject.feedItems.forEach(function(value){
                 // if(value.type == "Measure"){
                 //     if(hideMeasures){
@@ -155,8 +188,6 @@ sap.ui.define([
             var objectData = this.settingsObject.filter(function(value){
                 return value.text == event.oSource.mProperties.text;
             });
-            
-
             this.getRouter().navTo("master", objectData[0].route);
             // this.getRouter().navTo("master", {
             //     chartType: "Heatmap",
@@ -169,34 +200,6 @@ sap.ui.define([
         onInit: function() {
             this.getRouter().getRoute("master").attachMatched(this._onObjectMatched, this);
             this.oVizFrame = this.getView().byId("idoVizFrame");
-            
-            this.firstRun = true;
-            //var titleModel = new JSONModel({name: "dfsfsfdds"});
-            //this.setModel(titleModel, "title");
-          
-            //titleModel.setProperty("title", {name: "Wefihbfihbwehifibwehiefwbewf"});
-
-       
-            
-            
-            //var oRouter = this.getRouter();
-            //var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-           // oRouter.getRoute("master").attachPatternMatched(this._onObjectMatched, this);
-            
-           
-           //this.getRouter().attachRoutePatternMatched(this._onObjectMatched, this);
-
-
-
-
-
-            // Format.numericFormatter(ChartFormatter.getInstance());
-            // var formatPattern = ChartFormatter.DefaultPattern;
-            // this._onParseSettings(APP_CONSTANTS.WEB_STATISTICS_ODATA_SERVICE_URL, Bar);
-            //this._onParseSettings(APP_CONSTANTS.WEB_STATISTICS_ODATA_SERVICE_URL, HeatmapA);
-
-          
-
         }
     });
 });

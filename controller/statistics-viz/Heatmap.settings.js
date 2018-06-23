@@ -50,7 +50,7 @@ sap.ui.define([
                 }
             },
             title: {
-                visible: true,
+                visible: false,
                 text: 'Profit and Cost and Revenue by Item Category'
             }
         },

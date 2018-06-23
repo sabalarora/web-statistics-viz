@@ -1,21 +1,9 @@
 <mvc:View controllerName="com.dla.webstat.controller.statistics-viz.Master" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core"
     xmlns:semantic="sap.m.semantic">
-	<semantic:MasterPage
-	showNavButton="true">
+	<semantic:MasterPage showNavButton="true" navButtonPress="onNavButtonPress">
 		<semantic:subHeader>
 		</semantic:subHeader>
 		<semantic:content>
-			<!-- <Toolbar class="measureToolBar">
-				<Label text="Aggregation Level" class="toolBarTextHeader"></Label>
-			</Toolbar>
-			<Select id="selectPopover" width="100%" name="test" class="selectPop" items="{
-					path: '/aggregations'
-				}">
-				<items>
-					<core:Item text="{name}" key="Default" />
-				</items>
-			</Select> -->
-
 			<List id="MeasureList" mode="MultiSelect" selectionChange="onSelectionChange" includeItemInSelection="true" items="{
 					path: '/dataset/measures'
 				}">
@@ -29,7 +17,7 @@
 					</StandardListItem>
 				</items>
 			</List>
-			<List id="idoApplist" mode="MultiSelect" includeItemInSelection="true" items="{
+			<!-- <List id="idoApplist" mode="MultiSelect" includeItemInSelection="true" items="{
 					path: '/'
 				}">
 				<headerToolbar>
@@ -41,7 +29,16 @@
 					<StandardListItem type="{= ${device>/system/phone} ? 'Active' : 'Inactive'}" press="onSelectionChange" title="{object}">
 					</StandardListItem>
 				</items>
-			</List>
+			</List> -->
+			<Tree id="idoApplist" items="{path: '/'}" mode="MultiSelect" includeItemInSelection="true" expandToLevel="2" selectionChange="onSelectionChange">
+				<headerToolbar>
+					<Toolbar class="measureToolBar">
+						<Label text="Dimensions" class="toolBarTextHeader"></Label>
+					</Toolbar>
+				</headerToolbar>
+				<StandardTreeItem title="{object}">
+				</StandardTreeItem>
+			</Tree>
 		</semantic:content>
 	</semantic:MasterPage>
 </mvc:View>
