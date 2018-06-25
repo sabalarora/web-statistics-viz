@@ -1,52 +1,127 @@
 sap.ui.define([
-    "sap/ui/core/Control",
-    "sap/m/StandardListItem",
-    "../node_modules/dom-to-image/src/dom-to-image"
-], function (Control, StandardListItem, dimage) {
+    "sap/m/ObjectListItem",
+    "sap/m/Text",
+    "sap/m/Input",
+    "sap/viz/ui5/controls/VizFrame",
+    "sap/ui/model/odata/v2/ODataModel",
+    "com/dla/webstat/constants",
+    "sap/viz/ui5/data/FlattenedDataset",
+    "sap/viz/ui5/controls/common/feeds/FeedItem",
+], function (Control, Text, Input, VizFrame, ODataModel, APP_CONSTANTS, FlattenedDataset, FeedItem) {
     "use strict";
-    return StandardListItem.extend("com.dla.webstat.control.HeatmapListControl", {
-        metadata : {
-            aggregations : {
-            },
-            properties : {
 
-            },
-            events : {
+    return Control.extend("com.dla.webstat.control.HeatmapListControl", {
+        init: function () {},
+        onAfterRendering: function () {
+            var vizframe = sap.ui.getCore().byId("vizframe");
+            var settings = {
+                type: "bar",
+                dataset: {
+                    dimensions: [{
+                        name: 'Applications',
+                        value: "{object}"
+                    }],
+                    measures: [{
+                        name: 'Visits',
+                        value: '{visits}'
+                    }, {
+                        name: 'Users',
+                        value: '{users}'
+                    }],
+                    data: {
+                        path: "/appstatistics", //is the collection name
+                        sorter: [
+                            new sap.ui.model.Sorter({
+                                path: 'object',
+                                descending: false
+                            })
+                        ]
+                    }
+                },
+                feedItems: [{
+                        id: 'valueAxisFeed',
+                        uid: "valueAxis",
+                        type: "Measure",
+                        values: ["Visits", "Users"]
+                    },
+                    {
+                        uid: "categoryAxis",
+                        type: "Dimension",
+                        values: ["Applications"]
+                    }
+                ],
+                properties: {
 
-            }
-        },
-        init : function(){
-            // this.setAggregation("_heatmap", new sap.ui.core.mvc.XMLView({
-            //     viewName: "com.dla.webstat.view.statistics.Heatmap",
-            //     id: "heatmap"
-			// }));
-        },
-        renderer : function(oRM, oControl){
-            debugger;
-           
-            domtoimage.toPng(document.getElementById("__grid0"))
-                .then(function(dataUrl){
-                    var img = new Image();
-                    img.src = dataUrl;
-                    document.body.appendChild(img);
-                }
-            ).catch(function (error) {
-                console.error('oops, something went wrong!', error);
+                    plotArea: {
+                        dataLabel: {
+
+                            visible: true
+                        }
+                    },
+                    valueAxis: {
+                        label: {},
+                        title: {
+                            visible: false
+                        }
+                    },
+                    categoryAxis: {
+                        title: {
+                            visible: false
+                        }
+                    },
+                    title: {
+                        visible: false,
+                        text: 'Total Views and Users'
+                    }
+                },
+            };
+          
+            var dataModel = new ODataModel(APP_CONSTANTS.WEB_STATISTICS_ODATA_SERVICE_URL, true);
+            var oDataset = new FlattenedDataset(settings.dataset);
+            vizframe.setDataset(oDataset);
+            vizframe.setModel(dataModel);
+            settings.feedItems.forEach(function(value){
+                var item = new FeedItem(value);
+                vizframe.addFeed(item);
             });
-            // var img = new Image();
-            // img.src = dataUrl;
-            // document.body.appendChild(img);
-            // sap.m.StandardListItemRenderer.render(oRM,oControl);
-           
-           // $(oControl.oParent.getContent()[0]).html("ewfkjnwijfnewnjifnwe");
-            // oRM.write("<div");
-            // // <mvc:XMLView viewName='com.dla.webstat.view.statistics.Heatmap' id='heatmap'/>
-            // oRM.writeControlData(oControl);
-            // oRM.addClass("myAppDemoWTProductRating");
-            // oRM.writeClasses();
-            // oRM.write(">");
-            // oRM.renderControl(oControl.getAggregation("_heatmap")[0]);
-            // oRM.write("</div>");
+            vizframe.setVizType(settings.type);
+            vizframe.setVizProperties(settings.properties);
+        },
+        renderer: function (oRenderManager, oControl) {
+            var vizFrame = new VizFrame("vizframe", {
+                'vizType': 'bar',
+                'uiConfig': {
+                    'applicationSet': 'fiori',
+                    'showErrorMessage': true
+                }
+            });
+
+            oRenderManager.write("<div");
+            oRenderManager.writeControlData(oControl);
+            oRenderManager.addClass("myClass");
+            oRenderManager.writeClasses();
+            oRenderManager.write(">");
+
+
+            oRenderManager.renderControl(vizFrame);
+
+            ///oRenderManager.renderControl(new Text({...}));
+            oRenderManager.renderControl(new Input());
+            oRenderManager.write("</div>");
         }
     });
 });
+
+// metadata : {
+//     aggregations : {
+//     },
+//     properties : {
+
+//     },
+//     events : {
+
+//     }
+// },
+// init : function(){
+
+// },

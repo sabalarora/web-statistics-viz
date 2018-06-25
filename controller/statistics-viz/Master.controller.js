@@ -40,7 +40,6 @@ sap.ui.define([
             }
         },
         _onObjectMatched: function(oEvent) {
-         
             var args = oEvent.mParameters.arguments;
             var sValue = jQuery.sap.getUriParameters();
          
@@ -72,17 +71,17 @@ sap.ui.define([
         },
         measures: {},
         onSelectionChange: function(oEvent){
-            debugger;
+  
+            
             var measures = [];
             var query = {};
             if(oEvent.getParameters().listItem.isSelected()){
                 console.log("selected")
                 //measures.push(oEvent.getParameters().listItem.getTitle());
             }
-            debugger;
+          
             // var ra = this.oView.byId("ApplicationList");
-            // debugger;
-            // debugger;
+   
            // query.hideMeasures = measures;
          ///   console.log(measures);
 
@@ -109,7 +108,6 @@ sap.ui.define([
                     node: null
                 };
             });
-debugger;
             var hash = {};
             var settingsTree = list.reduce(function(agg, currVal, currIndex){
 
@@ -120,7 +118,7 @@ debugger;
                   
                     if(!hash[currVal[value.parentHash]]){
                         value.node.push({object: currVal[value.parentHash]});
-                        debugger;
+               
                         hash[currVal[value.object]] = currVal[value.parentHash];
                     }
                     
@@ -150,6 +148,8 @@ debugger;
              
                 this.oAppList.setModel(new JSONModel(r));
                 this.oAppList.expandToLevel(3);
+                //this.oAppList.selectAll(true);
+                //debugger;
             }.bind(this));
  
             var oDataset = new FlattenedDataset(settingsObject.dataset);
@@ -189,13 +189,6 @@ debugger;
                 return value.text == event.oSource.mProperties.text;
             });
             this.getRouter().navTo("master", objectData[0].route);
-            // this.getRouter().navTo("master", {
-            //     chartType: "Heatmap",
-            //     collection: "heatmapdaily"
-            // });
-            // if(event.oSource.mProperties.text == "Show Heatmap"){
-            //     this._onParseSettings(APP_CONSTANTS.WEB_STATISTICS_ODATA_SERVICE_URL, HeatmapA);
-            // }
         },
         onInit: function() {
             this.getRouter().getRoute("master").attachMatched(this._onObjectMatched, this);

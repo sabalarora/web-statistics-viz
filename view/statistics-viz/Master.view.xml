@@ -1,8 +1,7 @@
 <mvc:View controllerName="com.dla.webstat.controller.statistics-viz.Master" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core"
     xmlns:semantic="sap.m.semantic">
 	<semantic:MasterPage showNavButton="true" navButtonPress="onNavButtonPress">
-		<semantic:subHeader>
-		</semantic:subHeader>
+		<semantic:subHeader></semantic:subHeader>
 		<semantic:content>
 			<List id="MeasureList" mode="MultiSelect" selectionChange="onSelectionChange" includeItemInSelection="true" items="{
 					path: '/dataset/measures'
@@ -30,7 +29,7 @@
 					</StandardListItem>
 				</items>
 			</List> -->
-			<Tree id="idoApplist" items="{path: '/'}" mode="MultiSelect" includeItemInSelection="true" expandToLevel="2" selectionChange="onSelectionChange">
+			<Tree id="idoApplist" items="{path: '/'}" mode="MultiSelect" includeItemInSelection="true" selectionChange="onSelectionChange">
 				<headerToolbar>
 					<Toolbar class="measureToolBar">
 						<Label text="Dimensions" class="toolBarTextHeader"></Label>
