@@ -21,16 +21,10 @@
 					<l:GridData span="L12 M12 S12" />
 				</layoutData>
 			</StandardListItem>
-			<wt:HeatmapListControl 
-				title="Sex By Age"
-			>
-			</wt:HeatmapListControl>
-			<wt:HeatmapListControl />
-			<wt:HeatmapListControl />
-			<wt:HeatmapListControl />
-			<wt:HeatmapListControl />
-			<wt:HeatmapListControl />
-			<wt:HeatmapListControl />
+			<wt:BarCharListControl title="Sex By Age" />
+			<wt:HeatmapListControl title="Sex By Age" />
+			
+		
 		
 		
 			<!-- <StandardListItem

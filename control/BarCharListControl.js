@@ -10,7 +10,7 @@ sap.ui.define([
 ], function (Control, Text, Input, VizFrame, ODataModel, APP_CONSTANTS, FlattenedDataset, FeedItem) {
     "use strict";
 
-    var customControl = Control.extend("com.dla.webstat.control.HeatmapListControl", {
+    var customControl = Control.extend("com.dla.webstat.control.BarChartListControl", {
         metadata : {
             aggregations : {},
             properties : {
@@ -38,58 +38,57 @@ sap.ui.define([
             $("#"+this.sId + "-content").attr("style", "flex-direction: column !important;padding-top:10px;");
             $("#"+this.sId).attr("style", "height: 100%; width: 100%;");
             var settings = {
-                type: "heatmap",
+                type: "bar",
                 dataset: {
                     dimensions: [{
-                        name: 'Day',
-                        value: "{Day}"
-                      },{
-                        name: 'Time',
-                        value: "{Time}"
-                      }],
-                      measures: [{
-                          name: 'Hits',
-                          value: '{Hits}'
-                        },
-                      ],
-                      data: {
-                        path: "/heatmapdaily" // is the collection name
-                      }
+                        name: 'Applications',
+                        value: "{object}"
+                    }],
+                    measures: [{
+                        name: 'Visits',
+                        value: '{visits}'
+                    }, {
+                        name: 'Users',
+                        value: '{users}'
+                    }],
+                    data: {
+                        path: "/appstatistics" //is the collection name
+                    }
                 },
                 feedItems: [{
-                        uid: "color",
+                        uid: "valueAxis",
                         type: "Measure",
-                        values: ["Hits"]
+                        values: ["Visits", "Users"]
                     },
                     {
                         uid: "categoryAxis",
                         type: "Dimension",
-                        values: ["Time"]
-                    },
-                    {
-                        uid: "categoryAxis2",
-                        type: "Dimension",
-                        values: ["Day"]
+                        values: ["Applications"]
                     }
                 ],
                 properties: {
                     plotArea: {
                         dataLabel: {
+
+                            visible: true
+                        }
+                    },
+                    valueAxis: {
+                        label: {},
+                        title: {
                             visible: false
                         }
                     },
-                    legend: {
+                    categoryAxis: {
                         title: {
                             visible: false
                         }
                     },
                     title: {
                         visible: false,
-                        text: 'Profit and Cost and Revenue by Item Category'
+                        text: 'Total Views and Users'
                     }
-                },
-                actionItems:[],
-                aggregations:[]
+                }
             };
       
           //var settings = this.mProperties.settings;
