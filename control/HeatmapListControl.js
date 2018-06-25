@@ -1,5 +1,5 @@
 sap.ui.define([
-    "sap/m/ObjectListItem",
+    "sap/m/StandardListItem",
     "sap/m/Text",
     "sap/m/Input",
     "sap/viz/ui5/controls/VizFrame",
@@ -10,10 +10,33 @@ sap.ui.define([
 ], function (Control, Text, Input, VizFrame, ODataModel, APP_CONSTANTS, FlattenedDataset, FeedItem) {
     "use strict";
 
-    return Control.extend("com.dla.webstat.control.HeatmapListControl", {
+    var customControl = Control.extend("com.dla.webstat.control.HeatmapListControl", {
+        metadata : {
+            aggregations : {},
+            properties : {
+                settings: {
+                    type: 'object'
+                }
+            },
+            events : {}
+        },
         init: function () {},
         onAfterRendering: function () {
-            var vizframe = sap.ui.getCore().byId("vizframe");
+           
+            var vizframe = new VizFrame( {
+                'vizType': 'bar',
+                'uiConfig': {
+                    'applicationSet': 'fiori',
+                    'showErrorMessage': true
+                }
+            }).placeAt(this.sId + "-content");
+            vizframe.attachRenderComplete(function(){
+                $("#"+vizframe.sId).attr("style", "width:100% !important;height:480px;");
+
+            });
+            
+            $("#"+this.sId + "-content").attr("style", "flex-direction: column !important;");
+            $("#"+this.sId).attr("style", "height: 100%; width: 100%;");
             var settings = {
                 type: "bar",
                 dataset: {
@@ -29,17 +52,10 @@ sap.ui.define([
                         value: '{users}'
                     }],
                     data: {
-                        path: "/appstatistics", //is the collection name
-                        sorter: [
-                            new sap.ui.model.Sorter({
-                                path: 'object',
-                                descending: false
-                            })
-                        ]
+                        path: "/appstatistics" //is the collection name
                     }
                 },
                 feedItems: [{
-                        id: 'valueAxisFeed',
                         uid: "valueAxis",
                         type: "Measure",
                         values: ["Visits", "Users"]
@@ -75,8 +91,10 @@ sap.ui.define([
                     }
                 },
             };
-          
-            var dataModel = new ODataModel(APP_CONSTANTS.WEB_STATISTICS_ODATA_SERVICE_URL, true);
+      
+          //var settings = this.mProperties.settings;
+            var dataModel = new ODataModel(APP_CONSTANTS.WEB_STATISTICS_ODATA_SERVICE_URL);
+           
             var oDataset = new FlattenedDataset(settings.dataset);
             vizframe.setDataset(oDataset);
             vizframe.setModel(dataModel);
@@ -87,41 +105,10 @@ sap.ui.define([
             vizframe.setVizType(settings.type);
             vizframe.setVizProperties(settings.properties);
         },
-        renderer: function (oRenderManager, oControl) {
-            var vizFrame = new VizFrame("vizframe", {
-                'vizType': 'bar',
-                'uiConfig': {
-                    'applicationSet': 'fiori',
-                    'showErrorMessage': true
-                }
-            });
-
-            oRenderManager.write("<div");
-            oRenderManager.writeControlData(oControl);
-            oRenderManager.addClass("myClass");
-            oRenderManager.writeClasses();
-            oRenderManager.write(">");
-
-
-            oRenderManager.renderControl(vizFrame);
-
-            ///oRenderManager.renderControl(new Text({...}));
-            oRenderManager.renderControl(new Input());
-            oRenderManager.write("</div>");
+        renderer: function (oRm, oControl) {
+            sap.m.StandardListItemRenderer.render(oRm, oControl);
         }
     });
+    customControl.test = "wgfojwnfijownmfe";
+    return customControl;
 });
-
-// metadata : {
-//     aggregations : {
-//     },
-//     properties : {
-
-//     },
-//     events : {
-
-//     }
-// },
-// init : function(){
-
-// },
