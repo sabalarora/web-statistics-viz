@@ -22,3 +22,7 @@
     flex-direction: column !important;
     padding-top:10px !important;
 }
+.customAppDashboardView{
+    width: 100%;
+    overflow: auto;
+}
