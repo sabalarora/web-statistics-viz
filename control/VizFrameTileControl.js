@@ -7,7 +7,7 @@ sap.ui.define([
     "sap/viz/ui5/controls/common/feeds/FeedItem",
 ], function (Control, VizFrame, ODataModel, APP_CONSTANTS, FlattenedDataset, FeedItem) {
     "use strict";
-    var customControl = Control.extend("com.dla.webstat.control.LineChartListControl", {
+    var customControl = Control.extend("com.dla.webstat.control.VizFrameTileControl", {
         metadata : {
             aggregations : {},
             properties : {
@@ -20,7 +20,6 @@ sap.ui.define([
         onAfterRendering: function () {
             this.addStyleClass("customTileControl");
             var vizframe = new VizFrame( {
-                'vizType': 'bar',
                 'uiConfig': {
                     'applicationSet': 'fiori',
                     'showErrorMessage': true
@@ -30,7 +29,16 @@ sap.ui.define([
             //var dataModel = new ODataModel(APP_CONSTANTS.WEB_STATISTICS_ODATA_SERVICE_URL);
             var oDataset = new FlattenedDataset(settings.dataset);
             vizframe.setDataset(oDataset);
-            vizframe.setModel(new ODataModel(settings.dataset.data.service_url));
+            var oDataModel = new ODataModel(settings.dataset.data.service_url);
+            oDataModel.attachBatchRequestCompleted(function(response){
+                if(settings.dataset.data.onUpdateCompleteCallback){
+                    settings.dataset.data.onUpdateCompleteCallback({
+                        response: response,
+                        data: Object.values(response.getSource().oData)
+                    });
+                }
+            });
+            vizframe.setModel(oDataModel);
             settings.feedItems.forEach(function(value){
                 var item = new FeedItem(value);
                 vizframe.addFeed(item);

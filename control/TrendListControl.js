@@ -26,7 +26,9 @@ sap.ui.define([
                     + '<h2>'+this.mProperties.items.title+'</h2>'
                     + '<hr/>'
                     + this.mProperties.items.items.reduce(function(agg, currValue){
-                            agg += "<h3>" + currValue.name + ": " + currValue.value + "<h3/>";
+                            agg += "<span>" 
+                                    + currValue.name + ": " + currValue.value 
+                                + "</span><br/>";
                             return agg;
                         }, "") + 
                     '</div>';
