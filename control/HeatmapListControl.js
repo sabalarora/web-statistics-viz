@@ -23,7 +23,7 @@ sap.ui.define([
         },
         init: function () {},
         onAfterRendering: function () {
-           
+            this.addStyleClass("customTileControl");
             var vizframe = new VizFrame( {
                 'vizType': 'bar',
                 'uiConfig': {
@@ -31,13 +31,8 @@ sap.ui.define([
                     'showErrorMessage': true
                 }
             }).placeAt(this.sId + "-content");
-            vizframe.attachRenderComplete(function(){
-                $("#"+vizframe.sId).attr("style", "width:100% !important;height:480px;");
-
-            });
+         
             //this.oParent.setDefaultSpan("L1 M2 S2");
-            $("#"+this.sId + "-content").attr("style", "flex-direction: column !important;padding-top:10px;");
-            $("#"+this.sId).attr("style", "height: 100%; width: 100%;");
        
             var settings = {
                 type: "heatmap",

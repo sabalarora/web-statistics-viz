@@ -17,7 +17,7 @@ sap.ui.define([
         metadata : {
             aggregations : {},
             properties : {
-                settings: {
+                items: {
                     type: 'object'
                 }
             },
@@ -25,22 +25,19 @@ sap.ui.define([
         },
         init: function () {},
         onAfterRendering: function () {
-            var trendHtml = `<div style="width:100% !important;height:480px;">
+            this.addStyleClass("trendListControl");
+            var trendHtml = `<div class="trendListBody">
                                 <h2>Trending This Week</h2>
-                                <hr/>
-                                <h3>Hits: 3211</h3>
-                                <h3>Users: 2223</h3>
+                                <hr/>`+ 
+                                    this.mProperties.items.list.reduce(function(agg, currValue, currIndex){
+                                        agg += "<h3>" + currValue.name + ": " + currValue.value + "<img src='sap-icon://navigation-up-arrow'/>" + "<h3/>";
+                                        return agg;
+                                    }, "") +`
                             </div>`;
-                      
-            var domRef = this.getDomRef();
-            domRef.style.setProperty('background-color','rgb(88, 153, 218)','');
-            domRef.style.setProperty('color','White','');
-            domRef.style.setProperty('height','100%','');
-            domRef.style.setProperty('padding-top','5px','');
-            domRef.style.setProperty('padding-bottom','20px','');
-            domRef.style.setProperty('text-shadow','2px 2px #2c2c2c','');
             
-            $("#__control0-content").css('flex-direction','column');
+                           // sap-icon://navigation-up-arrow
+                           //sap-icon://navigation-down-arrow
+            var domRef = this.getDomRef();  
             $("#__control0-content").append(trendHtml);
         },
         renderer: function (oRm, oControl) {
