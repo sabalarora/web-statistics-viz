@@ -1,0 +1,76 @@
+[
+    {
+        "type" : "bar",
+        "vizId" : "B0001",
+        "dataset": {
+            "dimensions": [{
+                "name": "Applications",
+                "value": "{object}"
+            }],
+            "measures": [{
+                "name": "Visits",
+                "value": "{visits}"
+            },{
+                "name": "Users",
+                "value": "{users}"
+            }]
+        },
+        "data": {
+            "path": "appstatistics",
+            "sorter": [
+                {
+                    "path": "object",
+                    "descending": false
+                }
+            ]
+        },
+        "feedItems": [{
+                "uid": "valueAxis",
+                "type": "Measure",
+                "values": ["Visits", "Users"]
+            },
+            {
+                "uid": "categoryAxis",
+                "type": "Dimension",
+                "values": ["Applications"]
+            }
+        ],
+        "properties": {
+            "plotArea": {
+                "dataLabel": {
+                    "visible": true
+                }
+            },
+            "valueAxis": {
+                "label": { },
+                "title": {
+                    "visible": false
+                }
+            },
+            "categoryAxis": {
+                "title": {
+                    "visible": false
+                }
+            },
+            "title": {
+                "visible": false,
+                "text": "Total Views and Users"
+            },   
+            "actionItems":[   
+                {
+                    "type": "action",
+                    "text": "Show Application Dashboard",
+                    "route": "charts"
+                }
+            ],
+            "aggregations":[
+                {
+                    "name": "Weekly"
+                },
+                {
+                    "name": "Monthly"
+                }
+            ]
+        }
+    }
+]

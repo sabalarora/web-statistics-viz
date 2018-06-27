@@ -4,7 +4,13 @@ sap.ui.define([
 ], function(Controller, JSONModel){
     "use strict";
     return Controller.extend("com.dla.webstat.controller.Start",{
+        onAfterRendering: function(){
+            $("#__xmlview0").attr("style", "width: 100%;overflow: auto;");
+        },
         onInit: function(){
+           
+           // 
+            
             var oModel = new JSONModel({
                 daily: {
                     hits: 300,

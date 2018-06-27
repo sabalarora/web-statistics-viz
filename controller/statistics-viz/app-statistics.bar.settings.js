@@ -71,6 +71,14 @@ sap.ui.define([
                     chartType: "Heatmap",
                     collection: "heatmapdaily"
                 }
+            },    
+            {
+                type: 'action',
+                text: 'Show Application Dashboard',
+                route: {
+                    chartType: "Heatmap",
+                    collection: "heatmapdaily"
+                }
             }
         ],
         aggregations:[

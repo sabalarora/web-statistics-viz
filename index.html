@@ -4,6 +4,11 @@
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta charset="utf-8">
             <title>Web Statistics</title>
+            <style>
+                    .scrollableGridLayout{
+                        overflow: auto;
+                    }
+            </style>
             <script 
                 id="sap-ui-bootstrap"
                 src="/resources/sap-ui-core.js"
@@ -17,6 +22,7 @@
             </script>
             <script src="node_modules/dom-to-image/src/dom-to-image.js"/>
             <script>
+     
                 sap.ui.getCore().attachInit(function(){
                     new sap.ui.core.ComponentContainer({
                         name: "com.dla.webstat",

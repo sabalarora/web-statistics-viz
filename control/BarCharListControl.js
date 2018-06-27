@@ -7,7 +7,9 @@ sap.ui.define([
     "com/dla/webstat/constants",
     "sap/viz/ui5/data/FlattenedDataset",
     "sap/viz/ui5/controls/common/feeds/FeedItem",
-], function (Control, Text, Input, VizFrame, ODataModel, APP_CONSTANTS, FlattenedDataset, FeedItem) {
+    'sap/ui/model/Filter', 
+    'sap/ui/model/FilterOperator'
+], function (Control, Text, Input, VizFrame, ODataModel, APP_CONSTANTS, FlattenedDataset, FeedItem, Filter, FilterOperator) {
     "use strict";
 
     var customControl = Control.extend("com.dla.webstat.control.BarChartListControl", {
@@ -24,7 +26,7 @@ sap.ui.define([
         onAfterRendering: function () {
            
             var vizframe = new VizFrame( {
-                'vizType': 'bar',
+                'vizType': 'column',
                 'uiConfig': {
                     'applicationSet': 'fiori',
                     'showErrorMessage': true
@@ -38,7 +40,7 @@ sap.ui.define([
             $("#"+this.sId + "-content").attr("style", "flex-direction: column !important;padding-top:10px;");
             $("#"+this.sId).attr("style", "height: 100%; width: 100%;");
             var settings = {
-                type: "bar",
+                type: "column",
                 dataset: {
                     dimensions: [{
                         name: 'Applications',
@@ -52,7 +54,14 @@ sap.ui.define([
                         value: '{users}'
                     }],
                     data: {
-                        path: "/appstatistics" //is the collection name
+                        path: "/appstatistics", //is the collection name
+                        filters: [
+                            new Filter({
+                                path: "object",
+                                operator: FilterOperator.Contains,
+                                value1: "Batch",
+                            })
+                        ]
                     }
                 },
                 feedItems: [{
