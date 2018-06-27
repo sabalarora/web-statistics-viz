@@ -133,6 +133,7 @@ sap.ui.define([
             var re = new JSONModel(settingsObject);
             this.setModel(re);
             var oVizFrame = this.oVizFrame;
+            oVizFrame.attachSelectData(this.onSelectedData.bind(this));
             this.oVizFrame.destroyDataset();
             this.oVizFrame.destroyFeeds();
             settingsObject.dataset.data.path = collection;
@@ -184,11 +185,25 @@ sap.ui.define([
                 return value;
             });
         },
+        mLastSelectedData: null,
+        onSelectedData: function(oEvent){
+            this.mLastSelectedData = oEvent.getParameter('data');
+        },
+        getSelectedData: function(){
+            return this.mLastSelectedData.map(function(value){
+                return value.data.Applications;
+            })
+        },
         onItemClick: function(event){
             var objectData = this.settingsObject.filter(function(value){
                 return value.text == event.oSource.mProperties.text;
-            });
-            this.getRouter().navTo("master", objectData[0].route);
+            })[0];
+            var sData = this.getSelectedData();
+            if(objectData.route.url){
+                this.getRouter().navTo(objectData.route.url, {
+                    appName: sData[0]
+                });
+            }
         },
         onInit: function() {
             this.getRouter().getRoute("master").attachMatched(this._onObjectMatched, this);

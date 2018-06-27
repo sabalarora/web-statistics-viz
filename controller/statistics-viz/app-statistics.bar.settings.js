@@ -76,8 +76,7 @@ sap.ui.define([
                 type: 'action',
                 text: 'Show Application Dashboard',
                 route: {
-                    chartType: "Heatmap",
-                    collection: "heatmapdaily"
+                    url: "appdashboard"
                 }
             }
         ],

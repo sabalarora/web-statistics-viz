@@ -74,11 +74,20 @@
 						"object",
 						"master"
 					]
-				}
+                },
+                {   
+                    "pattern": "AppDashboard/{appName}",
+                    "name": "appdashboard",
+                    "target": "appdashboard"
+                }
             ],
             "targets": {
                 "start": {
                     "viewID": "start",
+                    "viewName": "Start"
+                },
+                "appdashboard": {
+                    "viewID": "appdashboard",
                     "viewName": "Start"
                 },
                 "statistics": {

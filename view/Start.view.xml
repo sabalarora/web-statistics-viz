@@ -1,16 +1,10 @@
-<mvc:View
-	controllerName="com.dla.webstat.controller.Start"
-	xmlns:mvc="sap.ui.core.mvc"
-	xmlns="sap.m"
-	xmlns:core="sap.ui.core"
-	xmlns:l="sap.ui.layout"
-	xmlns:microchart="sap.suite.ui.microchart"
-	xmlns:wt="com.dla.webstat.control"
-	>
-	<l:Grid id="layoutGrid" defaultSpan="L6 M12 S12" class="sapUiSmallMarginTop">
-		<l:content>
-		  
-			<StandardListItem
+<mvc:View controllerName="com.dla.webstat.controller.Start" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout" xmlns:microchart="sap.suite.ui.microchart" xmlns:wt="com.dla.webstat.control" class="customAppDashboardView">
+	<Page title="{/trendData/title}" class="sapUiContentPadding" showNavButton="true" navButtonPress="onNavButtonPress">
+		<l:Grid id="layoutGrid" defaultSpan="L6 M12 S12" class="sapUiSmallMarginTop">
+			<l:content>
+
+				<!-- <StandardListItem
 				title="Active"
 				info="Jobs in process"
 				infoState="Success"
@@ -18,14 +12,12 @@
 				<layoutData>
 					<l:GridData span="L12 M12 S12" />
 				</layoutData>
-			</StandardListItem>
-			<wt:TrendListControl items="{
-						list: [{name : 'Hits', value: 2222211},
-								{name: 'Users', value: 32222}]
-					}" />
-			<wt:BarCharListControl title="Bar Graph" />
-			<wt:HeatmapListControl title="Heatmap" />
-			<wt:LineChartListControl title="Line Chart" />
-		</l:content>
-	</l:Grid>
+			</StandardListItem> -->
+				<wt:TrendListControl items="{/trendData}" />
+				<wt:VizFrameTileControl settings="{/vizFrameSettings/0}" title="Bar Graph" />
+				<wt:VizFrameTileControl settings="{/vizFrameSettings/1}" title="Heatmap" />
+				<wt:VizFrameTileControl settings="{/vizFrameSettings/2}" title="Line Chart" />
+			</l:content>
+		</l:Grid>
+	</Page>
 </mvc:View>
