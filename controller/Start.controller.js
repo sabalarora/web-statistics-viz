@@ -193,11 +193,15 @@ sap.ui.define([
             this.getView().setModel(oModel);
             
             jQuery.ajax({ // change this later to a async call when we get control/trend list to support 2 way binding
-                url:  APP_CONSTANTS.WEB_STATISTICS_ODATA_SERVICE_URL + "trends",
+                url:  "/data/api.svc/" + "trends",
                 dataType: 'json',
                 async: false,
+                data: {
+                    appName: oEvent.mParameters.arguments.appName
+                },
                 success: function(response){
-                    oModel.oData.trendData.items = response[0].data;
+                    debugger;
+                    oModel.oData.trendData.items = response.data;
                 }
             });
         },
