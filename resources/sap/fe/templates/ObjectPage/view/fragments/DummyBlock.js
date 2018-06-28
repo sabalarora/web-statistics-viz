@@ -1,1 +1,0 @@
-sap.ui.define(['sap/uxap/BlockBase'],function(B){"use strict";var D=B.extend("sap.fe.templates.ObjectPage.view.fragments.DummyBlock",{metadata:{views:{Collapsed:{viewName:"sap.fe.templates.ObjectPage.view.fragments.DummyBlock",type:"XML"},Expanded:{viewName:"sap.fe.templates.ObjectPage.view.fragments.DummyBlock",type:"XML"}}}.fragments});return D;});
