@@ -1,0 +1,25 @@
+[{
+    "name": "Batch",
+    "data": [
+        {
+            "name": "Hits",
+            "value": 325
+        },
+        {
+            "name": "Users",
+            "value": 254
+        },
+        {
+            "name": "Most Active Day",
+            "value": "Thursday"
+        },
+        {
+            "name": "Most Active Month",
+            "value": 325
+        },
+        {
+            "name": "Most Active Users",
+            "value": ["Ellenod", "Khmer", "Decimus"]
+        }
+    ] 
+}]

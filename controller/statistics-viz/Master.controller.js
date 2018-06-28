@@ -34,10 +34,11 @@ sap.ui.define([
             var sPreviousHash = oHistory.getPreviousHash();
             if(sPreviousHash != undefined){
                 window.history.go(-1);
-            }else{
-                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-                oRouter.navTo("webcontent",{},true);
             }
+            // else{
+            //     var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            //     oRouter.navTo("webcontent",{},true);
+            // }
         },
         _onObjectMatched: function(oEvent) {
             var args = oEvent.mParameters.arguments;
@@ -68,6 +69,11 @@ sap.ui.define([
             // }else{
             //     this._onParseSettings(APP_CONSTANTS.WEB_STATISTICS_ODATA_SERVICE_URL, HeatmapA);
             // }
+            debugger;
+        },
+        onAfterRendering: function(event){
+            debugger;
+            //this.fireEvent(Controller.re)
         },
         measures: {},
         onSelectionChange: function(oEvent){
@@ -133,9 +139,9 @@ sap.ui.define([
             var re = new JSONModel(settingsObject);
             this.setModel(re);
             var oVizFrame = this.oVizFrame;
-            oVizFrame.attachSelectData(this.onSelectedData.bind(this));
-            this.oVizFrame.destroyDataset();
-            this.oVizFrame.destroyFeeds();
+            // oVizFrame.attachSelectData(this.onSelectedData.bind(this));
+            // this.oVizFrame.destroyDataset();
+            // this.oVizFrame.destroyFeeds();
             settingsObject.dataset.data.path = collection;
             var amModel = new ODataModel(oDataService, true);
             amModel.attachBatchRequestCompleted(function(response, tre){

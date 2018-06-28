@@ -11,9 +11,10 @@ sap.ui.define([
             if(oEvent.mParameters["?query"]){
                 this.mParams = oEvent.mParameters["?query"];
             }
-            if(!oEvent.mParameters.appName){
-                
-            }
+
+            // if(!oEvent.mParameters.arguments.appName){
+            //     throw "No Applicaction name was supplied";
+            // }
             var appModelFilter =  new sap.ui.model.Filter({
                 path: "object",
                 operator: sap.ui.model.FilterOperator.Contains,
@@ -190,28 +191,15 @@ sap.ui.define([
                 }]
             },true);
             this.getView().setModel(oModel);
-            oModel.oData.trendData.items = [
-                {
-                    name: "Hits",
-                    value: 325
-                },
-                {
-                    name: "Users",
-                    value: 254
-                },
-                {
-                    name: "Most Active Day",
-                    value: "Thursday"
-                },
-                {
-                    name: "Most Active Users",
-                    value: ["Ellenod", "Kramer", "Marcus"]
-                },
-                {
-                    name: "Most Active Month",
-                    value: ["January"]
+            
+            jQuery.ajax({ // change this later to a async call when we get control/trend list to support 2 way binding
+                url:  APP_CONSTANTS.WEB_STATISTICS_ODATA_SERVICE_URL + "trends",
+                dataType: 'json',
+                async: false,
+                success: function(response){
+                    oModel.oData.trendData.items = response[0].data;
                 }
-            ]
+            });
         },
         updateTrendData: function(response){
      
