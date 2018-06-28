@@ -4,59 +4,46 @@ sap.ui.define([
     "sap/ui/model/odata/v2/ODataModel",
     "com/dla/webstat/constants",
     "sap/ui/model/json/JSONModel",
-    'sap/viz/ui5/api/env/Format',
-    "sap/viz/ui5/format/ChartFormatter",
     "./Heatmap.settings",
     "./app-statistics.bar.settings",
     "sap/viz/ui5/data/FlattenedDataset",
     "sap/viz/ui5/controls/common/feeds/FeedItem",
     "sap/viz/ui5/controls/Popover",
     "sap/ui/core/routing/History"
-], function(jQuery, 
+], function (jQuery,
     Controller,
     ODataModel,
     APP_CONSTANTS,
     JSONModel,
-    Format,
-    ChartFormatter, 
-    HeatmapA, 
+    HeatmapA,
     Bar, FlattenedDataset, FeedItem, Popover, History) {
     "use strict";
     var _aValidTabKeys = ["Info", "Projects", "Hobbies", "Notes"];
-    return Controller.extend("com.dla.webstat.controller.statistics-viz.Master",{
+    return Controller.extend("com.dla.webstat.controller.statistics-viz.Master", {
         _chartTypes: {
             bar: Bar,
             Heatmap: HeatmapA,
             default: Bar
         },
-        onNavButtonPress: function(oEvent){
-            var oHistory = History.getInstance();
-            var sPreviousHash = oHistory.getPreviousHash();
-            if(sPreviousHash != undefined){
-                window.history.go(-1);
-            }
-            // else{
-            //     var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-            //     oRouter.navTo("webcontent",{},true);
-            // }
-        },
-        _onObjectMatched: function(oEvent) {
+        menuItems: null,
+        selectedData: null,
+        _onObjectMatched: function (oEvent) {
             var args = oEvent.mParameters.arguments;
             var sValue = jQuery.sap.getUriParameters();
-         
-            // this checks and finds the correct viz settings
-            var chartSettings = (this._chartTypes[args.chartType])
-                                    ? this._chartTypes[args.chartType]
-                                    : this._chartTypes["default"];
-            var collection = (args.collection)
-                ? "/" + args.collection 
-                : null;
 
-            var measuresToHide = (args["?query"])? args["?query"].hideMeasures.split(","):null;
-        
+            // this checks and finds the correct viz settings
+            var chartSettings = (this._chartTypes[args.chartType]) ?
+                this._chartTypes[args.chartType] :
+                this._chartTypes["default"];
+            var collection = (args.collection) ?
+                "/" + args.collection :
+                null;
+
+            var measuresToHide = (args["?query"]) ? args["?query"].hideMeasures.split(",") : null;
+
             this._onParseSettings(
-                APP_CONSTANTS.WEB_STATISTICS_ODATA_SERVICE_URL, 
-                chartSettings, 
+                APP_CONSTANTS.WEB_STATISTICS_ODATA_SERVICE_URL,
+                chartSettings,
                 collection,
                 measuresToHide
             );
@@ -69,151 +56,137 @@ sap.ui.define([
             // }else{
             //     this._onParseSettings(APP_CONSTANTS.WEB_STATISTICS_ODATA_SERVICE_URL, HeatmapA);
             // }
-            debugger;
-        },
-        onAfterRendering: function(event){
-            debugger;
-            //this.fireEvent(Controller.re)
+
+                // onSelectedData: function(oEvent){
+                //     this.mLastSelectedData = oEvent.getParameter('data');
+                // },
         },
         measures: {},
-        onSelectionChange: function(oEvent){
-  
-            
-            var measures = [];
-            var query = {};
-            if(oEvent.getParameters().listItem.isSelected()){
-                console.log("selected")
-                //measures.push(oEvent.getParameters().listItem.getTitle());
-            }
-          
-            // var ra = this.oView.byId("ApplicationList");
-   
-           // query.hideMeasures = measures;
-         ///   console.log(measures);
+        // onSelectionChange: function(oEvent){
 
 
-            // var params = {
-            //     chartType: "bar", 
-            //     collection: "appstatistics"
-            // };
-            // params.query = query;
-            // this.getRouter().navTo("master", params);
+        //     var measures = [];
+        //     var query = {};
+        //     if(oEvent.getParameters().listItem.isSelected()){
+        //         console.log("selected")
+        //         //measures.push(oEvent.getParameters().listItem.getTitle());
+        //     }
 
-
-
-            // var oParent = oEvent.oSource.getParent();
-            // oParent.oVizFrame;
-            // var oVizFrame = this.byId("idoVizFrame");
-            // oVizFrame.removeFeed(0);
-        },
-        _covertSettingsToTree:function(headers, list){
-            var res = headers.map(function(value){
+        // },
+        _covertSettingsToTree: function (headers, list) {
+            var res = headers.map(function (value) {
                 return {
                     object: value.name,
-                    parentHash:value.value.replace("{","").replace("}",""),
+                    parentHash: value.value.replace("{", "").replace("}", ""),
                     node: null
                 };
             });
             var hash = {};
-            var settingsTree = list.reduce(function(agg, currVal, currIndex){
+            var settingsTree = list.reduce(function (agg, currVal, currIndex) {
 
-                agg.map(function(value){
-                    if(!value.node){
-                        value.node = [];    
+                agg.map(function (value) {
+                    if (!value.node) {
+                        value.node = [];
                     }
-                  
-                    if(!hash[currVal[value.parentHash]]){
-                        value.node.push({object: currVal[value.parentHash]});
-               
+
+                    if (!hash[currVal[value.parentHash]]) {
+                        value.node.push({
+                            object: currVal[value.parentHash]
+                        });
+
                         hash[currVal[value.object]] = currVal[value.parentHash];
                     }
-                    
+
                     return value;
                 });
                 return agg;
-            },res);
-  
+            }, res);
+
             return settingsTree;
         },
-        _onParseSettings: function(oDataService, settingsObject, collection, hideMeasures){
-            var re = new JSONModel(settingsObject);
-            this.setModel(re);
-            var oVizFrame = this.oVizFrame;
-            // oVizFrame.attachSelectData(this.onSelectedData.bind(this));
-            // this.oVizFrame.destroyDataset();
-            // this.oVizFrame.destroyFeeds();
-            settingsObject.dataset.data.path = collection;
-            var amModel = new ODataModel(oDataService, true);
-            amModel.attachBatchRequestCompleted(function(response, tre){
-                this.oAppList =  sap.ui.getCore().byId("__component0---master--idoApplist");
-                this.detailPage = sap.ui.getCore().byId("__component0---detail--detailPage");
-                this.detailPage.setTitle(settingsObject.properties.title.text);
-                var dims = settingsObject.dataset.dimensions;
-                var r = Object.values(response.getSource().oData);
-                
-                var r = this._covertSettingsToTree(dims, r);
-             
-                this.oAppList.setModel(new JSONModel(r));
-                this.oAppList.expandToLevel(3);
-                //this.oAppList.selectAll(true);
-                //debugger;
-            }.bind(this));
- 
-            var oDataset = new FlattenedDataset(settingsObject.dataset);
-            this.oVizFrame.setDataset(oDataset);
-            this.oVizFrame.setModel(amModel);
-            settingsObject.feedItems.forEach(function(value){
-                // if(value.type == "Measure"){
-                //     if(hideMeasures){
-                //         if(value.values[0] == hideMeasures[0]){
-                //             return;
-                //         }
-                //     }
-                // }
-                var item = new FeedItem(value);
-                oVizFrame.addFeed(item);
-            });
-            this.oVizFrame.setVizType(settingsObject.type);
-            this.oVizFrame.setVizProperties(settingsObject.properties);
-            this.settingsObject = settingsObject.actionItems;
-
-            var popoverProps = {};
-            var chartPopover = new Popover(popoverProps);
-            chartPopover.setActionItems(this.onAddClickEventToItems(settingsObject.actionItems));
-            chartPopover.connect(this.oVizFrame.getVizUid());
-        },
-        onAddClickEventToItems: function(actionItems){
-        //     this.getRouter().navTo("master", {chartIndex: "bar",
-        // ewfwfe: "ewfww"});
-            var masterThis = this;
-            return actionItems.map(function(value){
-                value.press = masterThis.onItemClick.bind(masterThis);
-                return value;
-            });
-        },
-        mLastSelectedData: null,
-        onSelectedData: function(oEvent){
-            this.mLastSelectedData = oEvent.getParameter('data');
-        },
-        getSelectedData: function(){
-            return this.mLastSelectedData.map(function(value){
-                return value.data.Applications;
-            })
-        },
-        onItemClick: function(event){
-            var objectData = this.settingsObject.filter(function(value){
-                return value.text == event.oSource.mProperties.text;
-            })[0];
-            var sData = this.getSelectedData();
-            if(objectData.route.url){
-                this.getRouter().navTo(objectData.route.url, {
-                    appName: sData[0]
+        _onParseSettings: function (oDataService, settingsObject, collection) {
+            if(this.oVizFrame){
+                this.setModel(new JSONModel(settingsObject));
+                var oVizFrame = this.oVizFrame;
+                this.oVizFrame.attachSelectData(this.onVizItemClicked.bind(this));
+                this.oVizFrame.destroyDataset();
+                this.oVizFrame.destroyFeeds();
+                settingsObject.dataset.data.path = collection;
+                var amModel = new ODataModel(oDataService, true);
+                amModel.attachBatchRequestCompleted(function (response, tre) {
+                    this.oAppList = sap.ui.getCore().byId("__component0---master--idoApplist");
+                    this.detailPage = sap.ui.getCore().byId("__component0---detail--detailPage");
+                    this.detailPage.setTitle(settingsObject.properties.title.text);
+                    var dims = settingsObject.dataset.dimensions;
+                    var r = Object.values(response.getSource().oData);
+                    var r = this._covertSettingsToTree(dims, r);
+                    this.oAppList.setModel(new JSONModel(r));
+                    this.oAppList.expandToLevel(3);
+                    //this.oAppList.selectAll(true);
+                }.bind(this));
+                var oDataset = new FlattenedDataset(settingsObject.dataset);
+                this.oVizFrame.setDataset(oDataset);
+                this.oVizFrame.setModel(amModel);
+                settingsObject.feedItems.forEach(function (value) {
+                    // if(value.type == "Measure"){
+                    //     if(hideMeasures){
+                    //         if(value.values[0] == hideMeasures[0]){
+                    //             return;
+                    //         }
+                    //     }
+                    // }
+                    var item = new FeedItem(value);
+                    oVizFrame.addFeed(item);
                 });
+                this.oVizFrame.setVizType(settingsObject.type);
+                this.oVizFrame.setVizProperties(settingsObject.properties);
+                this.settingsObject = settingsObject.actionItems;
+                this.menuItems = settingsObject.actionItems;
+                var router = this.getRouter();
+                var that = this; 
+                // Add Action Item Functions
+                var masterPage = this;
+                var actionItems = settingsObject.actionItems.map(function (item) {
+                    item.press = masterPage.onPopOverActionClicked.bind(masterPage);
+                    return item;
+                });
+
+                // Chart Popover 
+                var chartPopover = new Popover({});
+                chartPopover.setActionItems(actionItems);
+                chartPopover.connect(this.oVizFrame.getVizUid());
             }
         },
-        onInit: function() {
+        filterSelectedPopOverItem: function(oEvent){
+            return this.menuItems.filter(function (value) {
+                return value.text == oEvent.oSource.mProperties.text;
+            })[0];
+        },
+        onNavButtonPress: function (oEvent) {
+            var oHistory = History.getInstance();
+            var sPreviousHash = oHistory.getPreviousHash();
+            if (sPreviousHash != undefined) {
+                window.history.go(-1);
+            }
+            // else{
+            //     var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                
+            //     oRouter.navTo("webcontent",{},true);
+            // }
+        },
+        onVizItemClicked: function(oEvent){
+            this.selectedData = oEvent.getParameter('data')[0].data;     
+        },
+        onPopOverActionClicked: function(oEvent){
+            var objectData = this.filterSelectedPopOverItem(oEvent);
+            this.getRouter().navTo(objectData.route.url, {
+                appName: this.selectedData.Applications
+            });     
+        },
+        onInit: function () {
+            var selectedData = this.selectedData = {}
             this.getRouter().getRoute("master").attachMatched(this._onObjectMatched, this);
-            this.oVizFrame = this.getView().byId("idoVizFrame");
+            var oVizFrame = this.oVizFrame = this.getView().byId("idoVizFrame");
         }
     });
 });

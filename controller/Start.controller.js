@@ -200,7 +200,7 @@ sap.ui.define([
                     appName: oEvent.mParameters.arguments.appName
                 },
                 success: function(response){
-                    debugger;
+              
                     oModel.oData.trendData.items = response.data;
                 }
             });
@@ -212,7 +212,7 @@ sap.ui.define([
          
         },
         onNavButtonPress: function(oEvent){
-            debugger;
+        
             var oHistory = History.getInstance();
             var sPreviousHash = oHistory.getPreviousHash();
             if(sPreviousHash != undefined){

@@ -15,7 +15,6 @@ sap.ui.define([
             method: "GET",
             path: RegExp("trends(.*)"),
             response: function(response){
-                debugger;
                 jQuery.ajax({
                     url: "localService/mockdata/statistics/viz-trends.json",
                     dataType: 'json',

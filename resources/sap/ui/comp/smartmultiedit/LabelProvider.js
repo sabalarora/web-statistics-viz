@@ -1,0 +1,7 @@
+/*
+ * ! SAP UI development toolkit for HTML5 (SAPUI5)
+
+		(c) Copyright 2009-2017 SAP SE. All rights reserved
+	
+ */
+sap.ui.define(["sap/ui/base/EventProvider","sap/ui/comp/smartfield/AnnotationHelper"],function(E,A){"use strict";var L=E.extend("sap.ui.comp.smartmultiedit.LabelProvider",{constructor:function(p){E.call(this);if(p){this.oFieldInstance=p.fieldInstance;this.oLabelInstance=p.labelInstance;if(p.metaDataProperty){this._oAnnotationHelper=new A();this.setLabelText(p.metaDataProperty);this.setLabelRequired(p.metaDataProperty);}}}});L.prototype.setLabelText=function(m){var t;if(!this.oLabelInstance.isPropertyInitial("text")){return;}t=this._oAnnotationHelper.getLabel(m);if(t&&this._isResourceBundlePath(t)){this.oLabelInstance.bindProperty("text",{path:t.substring(1,t.length-1)});}else{this.oLabelInstance.setProperty("text",t,true);}};L.prototype.setLabelRequired=function(m){var n=this._oAnnotationHelper.isNullable(m),l=this.oLabelInstance.isPropertyInitial("required"),f=this.oFieldInstance.isPropertyInitial("required"),F=this.oFieldInstance.isPropertyInitial("nullable");if(f&&l){this.oLabelInstance.setProperty("required",!n,true);}if(f){this.oFieldInstance.setProperty("required",!n,true);}else if(l){this.oLabelInstance.setProperty("required",this.oFieldInstance.getRequired(),true);}if(F){this.oFieldInstance.setProperty("nullable",n,true);}};L.prototype._isResourceBundlePath=function(p){var m=p.match(/{@i18n>.+}/gi)||p.match(/{i18n>.+}/gi);return(this.oLabelInstance.getModel("@i18n")||this.oLabelInstance.getModel("i18n"))&&m;};return L;});
