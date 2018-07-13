@@ -1,7 +1,8 @@
 sap.ui.define([
     'jquery.sap.global',
-    "sap/viz/ui5/format/ChartFormatter"
-], function (jQuery,ChartFormatter) {
+    "sap/viz/ui5/format/ChartFormatter",
+    "com/dla/webstat/constants"
+], function (jQuery,ChartFormatter, APP_CONSTANTS) {
     "use strict";
     var formatPattern = ChartFormatter.DefaultPattern;
     return {
@@ -19,7 +20,8 @@ sap.ui.define([
                 value: '{users}'
             }],
             data: {
-                path: "appstatistics", //is the collection name
+                collection: APP_CONSTANTS.WEB_STATISTICS_ODATA_SERVICE_URL,
+                path: "/appstatistics", //is the collection name
                 sorter: [
                     new sap.ui.model.Sorter({
                         path: 'object',

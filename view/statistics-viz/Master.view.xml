@@ -3,8 +3,8 @@
 	<semantic:MasterPage showNavButton="true" navButtonPress="onNavButtonPress">
 		<semantic:subHeader></semantic:subHeader>
 		<semantic:content>
-			<List id="MeasureList" mode="MultiSelect" selectionChange="onSelectionChange" includeItemInSelection="true" items="{
-					path: '/dataset/measures'
+			<List id="measures" mode="MultiSelect" selectionChange="onMeasureClicked" includeItemInSelection="true" items="{
+					path: '{re}'
 				}">
 				<headerToolbar>
 					<Toolbar class="measureToolBar">
@@ -12,8 +12,7 @@
 					</Toolbar>
 				</headerToolbar>
 				<items>
-					<StandardListItem title="{name}">
-					</StandardListItem>
+					<StandardListItem title="{text}" />
 				</items>
 			</List>
 			<!-- <List id="idoApplist" mode="MultiSelect" includeItemInSelection="true" items="{
@@ -29,14 +28,15 @@
 					</StandardListItem>
 				</items>
 			</List> -->
-			<Tree id="idoApplist" items="{path: '/'}" mode="MultiSelect" includeItemInSelection="true" selectionChange="onSelectionChange">
+			<Tree id="idoApplist" mode="MultiSelect" includeItemInSelection="true" selectionChange="onDimensionClicked" items="{	
+					path: 'view>/dimensions'
+				}">
 				<headerToolbar>
 					<Toolbar class="measureToolBar">
 						<Label text="Dimensions" class="toolBarTextHeader"></Label>
 					</Toolbar>
 				</headerToolbar>
-				<StandardTreeItem title="{object}">
-				</StandardTreeItem>
+				<StandardTreeItem title="{text}" />
 			</Tree>
 		</semantic:content>
 	</semantic:MasterPage>
