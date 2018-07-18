@@ -1,23 +1,8 @@
 sap.ui.define([
     "sap/ui/base/Object",
-   "../../../node_modules/moment/moment"
-], function(Object){
-    var DATE_SELECTOR = {
-        HOURLY:{
-            AGGREGATIONLEVEL: "h"
-        },
-        DAILY:{
-            PATTERN: "YYYY-MM-DD",
-            AGGREGATIONLEVEL: "d"
-        },
-        MONTHLY:{
-            PATTERN: "YYYY-MM",
-            AGGREGATIONLEVEL: "m"
-        },
-        QUARTERLY:{
-            AGGREGATIONLEVEL: "q"
-        }
-    };
+   "../../../node_modules/moment/moment",
+   "./statistics-generator-constants"
+], function(Object, DATE_SELECTOR){
     return Object.extend("StatisticsGenerator", {
         getWeeklyObject : function(){
             return {
@@ -28,7 +13,7 @@ sap.ui.define([
         },
         getWeeklyData: function(data){
             var weeklyObject = this.getWeeklyObject();
-         
+          
             return data.reduce(function(acc, val){
                 if(val.TIMESTAMP >= weeklyObject.start && val.TIMESTAMP <= weeklyObject.mid){
                     
@@ -57,6 +42,7 @@ sap.ui.define([
         },
          dailyData :function(hourlyData, TIMESTAMP_PATTERN){
             var lastTimeStamp = null;
+           
             return hourlyData.reduce(function(acc, val){
                 var x = moment(lastTimeStamp).format(TIMESTAMP_PATTERN.PATTERN);
                 var y = moment(val.TIMESTAMP).format(TIMESTAMP_PATTERN.PATTERN);
@@ -98,7 +84,7 @@ sap.ui.define([
                 return $.extend({}, object, newData);
             });
            
-          
+            debugger;
             var daily = this.dailyData(this.__HOURLY_DATA__, DATE_SELECTOR.DAILY);
             var monthly = this.dailyData(this.__HOURLY_DATA__, DATE_SELECTOR.MONTHLY);
             //var yy = this.getWeeklyData(daily);
