@@ -14,7 +14,7 @@ sap.ui.define([
         _onObjectMatched: function(oEvent){
             var oInterval = oEvent.getParameter("arguments").interval;
             this.args = oEvent.getParameter("arguments");
-           
+          
             // var iSelection;
             // var intervalMap = {
             //     weekly: "webcontent_stat_weekly",

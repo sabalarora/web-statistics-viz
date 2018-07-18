@@ -19,12 +19,26 @@ sap.ui.define([
         },
         onAfterRendering: function () {
             this.addStyleClass("customTileControl");
+            jQuery.sap.require("sap/suite/ui/commons/ChartContainer");
             var vizframe = new VizFrame( {
                 'uiConfig': {
                     'applicationSet': 'fiori',
                     'showErrorMessage': true
                 }
-            }).placeAt(this.sId + "-content");
+            });//.placeAt(this.sId + "-content");
+            var oChartContainerContent = new sap.suite.ui.commons.ChartContainerContent({
+                icon : "sap-icon://line-chart-time-axis",
+                title : "vizFrame Line Chart Sample",
+                content : [ vizframe ]
+            });
+            var oChartContainer = new sap.suite.ui.commons.ChartContainer({
+                content : [ oChartContainerContent ]
+            });
+            oChartContainer.setShowFullScreen(true);
+            oChartContainer.setAutoAdjustHeight(true);
+            oChartContainer.placeAt(this.sId + "-content");
+            //oView.byId('chartFixFlex').setFlexContent(oChartContainer); 
+
             var settings = this.mProperties.settings;
             //var dataModel = new ODataModel(APP_CONSTANTS.WEB_STATISTICS_ODATA_SERVICE_URL);
             var oDataset = new FlattenedDataset(settings.dataset);

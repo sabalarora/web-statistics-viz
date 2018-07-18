@@ -22,16 +22,16 @@ sap.ui.define([
             $("#__control0-content").append(trendHtml);
         },
         generateHtml: function(){
-            return '<div class="trendListBody">'
-                    + '<h2>'+this.mProperties.items.title+'</h2>'
-                    + '<hr/>'
-                    + this.mProperties.items.items.reduce(function(agg, currValue){
-                            agg += "<span>" 
-                                    + currValue.name + ": " + currValue.value 
-                                + "</span><br/>";
-                            return agg;
-                        }, "") + 
-                    '</div>';
+            // return '<div class="trendListBody">'
+            //         + '<h2>'+this.mProperties.items.title+'</h2>'
+            //         + '<hr/>'
+            //         + this.mProperties.items.items.reduce(function(agg, currValue){
+            //                 agg += "<span>" 
+            //                         + currValue.name + ": " + currValue.value 
+            //                     + "</span><br/>";
+            //                 return agg;
+            //             }, "") + 
+            //         '</div>';
         },
         renderer: function (oRm, oControl) {
             sap.m.StandardListItemRenderer.render(oRm, oControl);

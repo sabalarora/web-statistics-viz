@@ -2,8 +2,9 @@ sap.ui.define([
     'com/dla/webstat/controller/BaseController',
     "sap/ui/model/json/JSONModel",
     "com/dla/webstat/constants",
-    "sap/ui/core/routing/History"
-], function(Controller, JSONModel, APP_CONSTANTS, History){
+    "sap/ui/core/routing/History",
+    "sap/ui/model/odata/v2/ODataModel"
+], function(Controller, JSONModel, APP_CONSTANTS, History, ODataModel){
     "use strict";
     return Controller.extend("com.dla.webstat.controller.Start",{
         _onObjectMatched: function(oEvent) {
@@ -11,6 +12,17 @@ sap.ui.define([
             if(oEvent.mParameters["?query"]){
                 this.mParams = oEvent.mParameters["?query"];
             }
+            $.get("/data/webstatistics.svc/MEETING?weekly=ewfwfwefw", function(response){
+debugger
+            })
+            // var oDataModel = new ODataModel("/data/webstatistics.svc/", true);
+            // oDataModel.read("/TestData", {
+    		// 	success: function(oData, response) {
+            //         // var oResults = oData.results;
+            //         // oModel.setData(oData.results);  
+            //         debugger;
+            //     }
+    		// })
 
             // if(!oEvent.mParameters.arguments.appName){
             //     throw "No Applicaction name was supplied";
@@ -192,18 +204,18 @@ sap.ui.define([
             },true);
             this.getView().setModel(oModel);
             
-            jQuery.ajax({ // change this later to a async call when we get control/trend list to support 2 way binding
-                url:  "/data/api.svc/" + "trends",
-                dataType: 'json',
-                async: false,
-                data: {
-                    appName: oEvent.mParameters.arguments.appName
-                },
-                success: function(response){
+            // jQuery.ajax({ // change this later to a async call when we get control/trend list to support 2 way binding
+            //     url:  "/data/api.svc/" + "trends",
+            //     dataType: 'json',
+            //     async: false,
+            //     data: {
+            //         appName: oEvent.mParameters.arguments.appName
+            //     },
+            //     success: function(response){
               
-                    oModel.oData.trendData.items = response.data;
-                }
-            });
+            //         oModel.oData.trendData.items = response.data;
+            //     }
+            // });
         },
         updateTrendData: function(response){
      
